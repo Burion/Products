@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace DataAccess.Infrastructure
+namespace DataAccess.Infrastructure.EfCore
 {
     public class DbAccesserEF<T> : IDbAccesser<T> where T : class
     {
