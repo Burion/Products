@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 namespace DataAccess.Infrastructure
 {
     public class DbAccesserEF<T> : IDbAccesser<T> where T : class

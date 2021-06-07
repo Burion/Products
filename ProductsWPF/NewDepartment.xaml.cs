@@ -28,7 +28,7 @@ namespace ProductsWPF
 
         void SubmitButtonClick(object sender, EventArgs e)
         {
-            Category d = new Category() { Name = name.Text, Address = address.Text };
+            Category d = new Category() { Name = name.Text };
             DbAccesserEF<Category> da = new DbAccesserEF<Category>();
             da.AddItem(d);
             this.Close();
