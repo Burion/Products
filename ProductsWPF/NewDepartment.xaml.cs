@@ -28,8 +28,8 @@ namespace ProductsWPF
 
         void SubmitButtonClick(object sender, EventArgs e)
         {
-            Department d = new Department() { Name = name.Text, Address = address.Text };
-            DbAccesser<Department> da = new DbAccesser<Department>();
+            Category d = new Category() { Name = name.Text, Address = address.Text };
+            DbAccesserEF<Category> da = new DbAccesserEF<Category>();
             da.AddItem(d);
             this.Close();
         }

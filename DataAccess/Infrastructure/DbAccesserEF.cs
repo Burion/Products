@@ -1,14 +1,15 @@
-﻿using System;
+﻿using DataAccess.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace DataAccess.Infrastructure
 {
-    public class DbAccesser<T> where T : class
+    public class DbAccesserEF<T> : IDbAccesser<T> where T : class
     {
         readonly ProductsContext _context;
-        public DbAccesser()
+        public DbAccesserEF()
         {
             _context = new ProductsContext();
         }
