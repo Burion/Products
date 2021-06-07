@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DataAccess;
 using DataAccess.Infrastructure;
+using DataAccess.Infrastructure.Dapper;
 using DataAccess.Models;
 
 namespace ProductsWPF
@@ -29,7 +30,7 @@ namespace ProductsWPF
         void SubmitButtonClick(object sender, EventArgs e)
         {
             Category d = new Category() { Name = name.Text };
-            DbAccesserEF<Category> da = new DbAccesserEF<Category>();
+            DbAccesserDapper<Category> da = new DbAccesserDapper<Category>();
             da.AddItem(d);
             this.Close();
         }
