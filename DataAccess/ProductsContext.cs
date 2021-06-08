@@ -16,8 +16,11 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {   
+
             var connectionString = ConfigurationManager.AppSettings.Get("connectionString") ?? "Server=localhost;Database=productdb;Trusted_Connection=True;";
-            options.UseSqlServer(connectionString);
+            options
+                .UseLazyLoadingProxies()
+                .UseSqlServer(connectionString);
         }
     }
 }

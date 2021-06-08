@@ -12,7 +12,7 @@
                 Add Department
             </Button>
 
-            <Button x:Name="product">
+            <Button x:Name="product" Click="ProductsPageClick">
                 Add Product
             </Button>
             <Frame x:Name="mainFrame" />

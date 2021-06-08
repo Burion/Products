@@ -35,5 +35,16 @@ namespace ProductsWPF
             Categories categories = new Categories();
             mainFrame.Navigate(categories);
         }
+
+        void ProductsPageClick(object o, EventArgs e)
+        {
+            Products products = new Products();
+            mainFrame.Navigate(products);
+        }
+
+        private void product_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
