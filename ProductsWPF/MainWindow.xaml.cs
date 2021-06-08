@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataAccess.Infrastructure.EfCore;
+using DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,13 +26,14 @@ namespace ProductsWPF
         {
             InitializeComponent();
 
-
+            DbAccesserEF<Category> db = new DbAccesserEF<Category>();
+            var categories = db.GetItems();
         }
 
         void AddDepartmentClick(object o, EventArgs e)
         {
-            Window w = new NewDepartment();
-            w.Show();
+            Categories categories = new Categories();
+            mainFrame.Navigate(categories);
         }
     }
 }

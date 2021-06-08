@@ -11,7 +11,7 @@ using DataAccess.Attrubutes;
 
 namespace DataAccess.Infrastructure.Dapper
 {
-    public class DbAccesserDapper<T> : IDbAccesser<T>
+    public class DbAccesserEF<T> : IDbAccesser<T>
     {
         public void AddItem(T item)
         {
@@ -28,12 +28,22 @@ namespace DataAccess.Infrastructure.Dapper
             throw new NotImplementedException();
         }
 
+        public void EditItem(T item)
+        {
+            throw new NotImplementedException();
+        }
+
         public T GetItem(Predicate<T> predicate)
         {
             throw new NotImplementedException();
         }
 
         public IEnumerable<T> GetItems(Predicate<T> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<T> GetItems()
         {
             throw new NotImplementedException();
         }

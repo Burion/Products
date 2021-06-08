@@ -30,7 +30,7 @@ namespace ProductsWPF
         void SubmitButtonClick(object sender, EventArgs e)
         {
             Category d = new Category() { Name = name.Text };
-            DbAccesserDapper<Category> da = new DbAccesserDapper<Category>();
+            DbAccesserEF<Category> da = new DbAccesserEF<Category>();
             da.AddItem(d);
             this.Close();
         }

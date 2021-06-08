@@ -15,6 +15,7 @@
             <Button x:Name="product">
                 Add Product
             </Button>
+            <Frame x:Name="mainFrame" />
         </StackPanel>
     </Grid>
 </Window>

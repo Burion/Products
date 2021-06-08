@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAccess.Interfaces
 {
-    interface IDbAccesser<T>
+    public interface IDbAccesser<T>
     {
         void AddItem(T item);
         void DeleteItem(T item);
@@ -12,7 +12,9 @@ namespace DataAccess.Interfaces
         T GetItem(Predicate<T> predicate);
 
         IEnumerable<T> GetItems(Predicate<T> predicate);
+        IEnumerable<T> GetItems();
 
         void EditItem(T original, T toSet);
+        void EditItem(T item);
     }
 }
