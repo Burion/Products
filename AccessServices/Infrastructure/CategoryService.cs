@@ -38,7 +38,10 @@ namespace AccessServices.Infrastructure
 
         public void AddCategory(CategoryDTO item)
         {
+            
+            
             dbAccesser.AddItem(mapper.Map<CategoryDTO, Category>(item));
+            
         }
 
         public void EditCategory(CategoryDTO item)

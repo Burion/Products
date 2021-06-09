@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using AccessServices.Mapper;
+using AccessServices.DTOs;
 
 namespace AccessServices.Infrastructure
 {
@@ -24,6 +25,10 @@ namespace AccessServices.Infrastructure
             mapper = mappingConfig.CreateMapper();
         }
 
-        public 
+        public IEnumerable<ProductDTO> GetProducts()
+        {
+            var dbItems = dbAccesser.GetItems();
+            return mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(dbItems);
+        }
     }
 }

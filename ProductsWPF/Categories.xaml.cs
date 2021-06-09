@@ -33,7 +33,7 @@ namespace ProductsWPF
             
             grid.ItemsSource = catS.GetCategories();
 
-            grid.InitializingNewItem += (o, e) => { catS.AddCategory((CategoryDTO)e.NewItem); };
+            grid.InitializingNewItem += (o, e) => { catS.AddCategory((CategoryDTO)e.NewItem); grid.ItemsSource = catS.GetCategories();  };
 
 
             grid.RowEditEnding += (o, e) => 
