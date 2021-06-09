@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DataAccess;
 using DataAccess.Infrastructure;
-using DataAccess.Infrastructure.Dapper;
+using DataAccess.Infrastructure.EfCore;
 using DataAccess.Models;
 
 namespace ProductsWPF

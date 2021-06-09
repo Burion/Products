@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AccessServices;
+using AccessServices.DTOs;
+using AccessServices.Infrastructure;
 
 namespace ProductsWPF
 {
@@ -20,19 +23,22 @@ namespace ProductsWPF
     /// </summary>
     public partial class Categories : Page
     {
+        CategoryService catS;
         public Categories()
         {
             InitializeComponent();
 
-            DbAccesserEF<Category> accesser = new DbAccesserEF<Category>();
-            grid.ItemsSource = accesser.GetItems();
-
-            //grid.InitializingNewItem += (o, e) => { accesser.AddItem((Category)e.NewItem); };
+            //DbAccesserEF<Category> accesser = new DbAccesserEF<Category>();
+            catS = new CategoryService();
             
+            grid.ItemsSource = catS.GetCategories();
+
+            grid.InitializingNewItem += (o, e) => { catS.AddCategory((CategoryDTO)e.NewItem); };
+
 
             grid.RowEditEnding += (o, e) => 
             {
-                accesser.EditItem((Category)grid.SelectedItem); 
+                catS.EditCategory((CategoryDTO)e.Row.Item);
             };
 
             
@@ -42,8 +48,7 @@ namespace ProductsWPF
             if (e.Key == Key.Delete)
             {
                 var grid = (DataGrid)sender;
-                DbAccesserEF<Category> accesser = new DbAccesserEF<Category>();
-                accesser.DeleteItem((Category)grid.SelectedItem);
+                catS.DeleteCategory((CategoryDTO)grid.SelectedItem);
             }
         }
 

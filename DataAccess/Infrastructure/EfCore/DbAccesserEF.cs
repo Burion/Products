@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 
@@ -25,9 +26,9 @@ namespace DataAccess.Infrastructure.EfCore
             _context.SaveChanges();
         }
 
-        public T GetItem(Predicate<T> predicate)
+        public T GetItem(Expression<Func<T, bool>> predicate)
         {
-            return _context.Set<T>().SingleOrDefault(i => predicate(i));
+            return _context.Set<T>().SingleOrDefault(predicate);
         }
 
         public IEnumerable<T> GetItems(Predicate<T> predicate)

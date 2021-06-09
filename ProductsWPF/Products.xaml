@@ -14,7 +14,9 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged }"></DataGridTextColumn>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged }"></DataGridTextColumn>
                 <DataGridTextColumn Header="Price" Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged }"></DataGridTextColumn>
-                <DataGridTextColumn Header="Category" Binding="{Binding Category.Name, UpdateSourceTrigger=PropertyChanged }"></DataGridTextColumn>
+                <DataGridComboBoxColumn x:Name="combo" Header="Category" SelectedItemBinding="{Binding Category.Name}" DisplayMemberPath="Name">
+                    
+                </DataGridComboBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
         

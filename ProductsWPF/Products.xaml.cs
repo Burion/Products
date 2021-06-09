@@ -26,7 +26,8 @@ namespace ProductsWPF
             DbAccesserEF<Product> accesser = new DbAccesserEF<Product>();
             grid.ItemsSource = accesser.GetItems();
 
-            
+            DbAccesserEF<Category> dbcategories = new DbAccesserEF<Category>();
+            combo.ItemsSource = dbcategories.GetItems();
             grid.RowEditEnding += (o, e) =>
             {
                 accesser.EditItem((Product)grid.SelectedItem);

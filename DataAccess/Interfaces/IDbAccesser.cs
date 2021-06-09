@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace DataAccess.Interfaces
@@ -9,7 +10,7 @@ namespace DataAccess.Interfaces
         void AddItem(T item);
         void DeleteItem(T item);
 
-        T GetItem(Predicate<T> predicate);
+        T GetItem(Expression<Func<T, bool>> predicate);
 
         IEnumerable<T> GetItems(Predicate<T> predicate);
         IEnumerable<T> GetItems();

@@ -8,10 +8,11 @@ using System.Text;
 using Dapper;
 using System.Linq;
 using DataAccess.Attrubutes;
+using System.Linq.Expressions;
 
 namespace DataAccess.Infrastructure.Dapper
 {
-    public class DbAccesserEF<T> : IDbAccesser<T>
+    public class DbAccesserDapper<T> : IDbAccesser<T>
     {
         public void AddItem(T item)
         {
@@ -33,7 +34,12 @@ namespace DataAccess.Infrastructure.Dapper
             throw new NotImplementedException();
         }
 
-        public T GetItem(Predicate<T> predicate)
+        public T GetItem(Func<T, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T GetItem(Expression<Func<T, bool>> predicate)
         {
             throw new NotImplementedException();
         }
