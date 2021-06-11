@@ -1,0 +1,28 @@
+﻿<Window x:Class="ProductsWPF.EditProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProductsWPF"
+        mc:Ignorable="d"
+        Title="EditProduct" Height="450" Width="800">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+
+            <Label>Name</Label>
+            <TextBox x:Name="nameInput" Text="{Binding Source=_product, Path=Name}"></TextBox>
+
+            <Label>Description</Label>
+            <TextBox x:Name="descriptionInput" Text="{Binding Source=_product, Path=Description}"></TextBox>
+
+            <Label>Price</Label>
+            <TextBox  x:Name="priceInput"  Text="{Binding Source=_product, Path=Price}"></TextBox>
+
+            <Label>Category</Label>
+            <ComboBox x:Name="categoryCombo" DisplayMemberPath=""></ComboBox>
+
+            <Button Click="Edit_Click" Content="Add"></Button>
+
+        </StackPanel>
+    </Grid>
+</Window>

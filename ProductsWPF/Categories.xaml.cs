@@ -15,6 +15,9 @@ using System.Windows.Shapes;
 using AccessServices;
 using AccessServices.DTOs;
 using AccessServices.Infrastructure;
+using Ninject;
+using System.Reflection;
+using AccessServices.Interfaces;
 
 namespace ProductsWPF
 {
@@ -23,13 +26,17 @@ namespace ProductsWPF
     /// </summary>
     public partial class Categories : Page
     {
-        CategoryService catS;
+        ICategoryService catS;
         public Categories()
         {
             InitializeComponent();
 
             //DbAccesserEF<Category> accesser = new DbAccesserEF<Category>();
-            catS = new CategoryService();
+            //catS = new CategoryService();
+
+            var kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+            catS = kernel.Get<ICategoryService>();
             
             grid.ItemsSource = catS.GetCategories();
 

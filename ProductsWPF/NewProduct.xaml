@@ -1,0 +1,30 @@
+﻿<Window x:Class="ProductsWPF.NewProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProductsWPF"
+        mc:Ignorable="d"
+        Title="NewProduct" Height="450" Width="800">
+    <Grid>
+
+        <StackPanel Orientation="Vertical">
+
+            <Label>Name</Label>
+            <TextBox x:Name="nameInput"></TextBox>
+
+            <Label>Description</Label>
+            <TextBox x:Name="descriptionInput"></TextBox>
+
+            <Label>Price</Label>
+            <TextBox  x:Name="priceInput" PreviewTextInput="PreviewTextInput"></TextBox>
+
+            <Label>Category</Label>
+            <ComboBox x:Name="categoryCombo" DisplayMemberPath=""></ComboBox>
+
+            <Button Click="Add_Click" Content="Add"></Button>
+
+        </StackPanel>
+
+    </Grid>
+</Window>

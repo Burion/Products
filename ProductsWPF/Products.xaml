@@ -9,16 +9,28 @@
       Title="Products">
 
     <Grid>
-        <DataGrid x:Name="grid" AutoGenerateColumns="False">
+        <StackPanel>
+            
+        <DataGrid x:Name="grid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Delete">
+                            
+                        </MenuItem>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged }"></DataGridTextColumn>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged }"></DataGridTextColumn>
                 <DataGridTextColumn Header="Price" Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged }"></DataGridTextColumn>
-                <DataGridComboBoxColumn x:Name="combo" Header="Category" SelectedItemBinding="{Binding Category.Name}" DisplayMemberPath="Name">
-                    
-                </DataGridComboBoxColumn>
+                <DataGridTextColumn x:Name="combo" Header="Category" Binding="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged }">
+
+                </DataGridTextColumn>
             </DataGrid.Columns>
+            
         </DataGrid>
-        
+        <Button Content="Add new product" Click="Button_Click"></Button>
+        </StackPanel>
+
     </Grid>
 </Page>

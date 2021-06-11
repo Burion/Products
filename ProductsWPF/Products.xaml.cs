@@ -1,5 +1,4 @@
-﻿using DataAccess.Infrastructure.EfCore;
-using DataAccess.Models;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AccessServices.DTOs;
+using AccessServices.Infrastructure;
 
 namespace ProductsWPF
 {
@@ -20,18 +21,33 @@ namespace ProductsWPF
     /// </summary>
     public partial class Products : Page
     {
+        ProductService productsService;
         public Products()
         {
             InitializeComponent();
-            DbAccesserEF<Product> accesser = new DbAccesserEF<Product>();
-            grid.ItemsSource = accesser.GetItems();
+            productsService = new ProductService();
+            grid.ItemsSource = productsService.GetProducts();
 
-            DbAccesserEF<Category> dbcategories = new DbAccesserEF<Category>();
-            combo.ItemsSource = dbcategories.GetItems();
+            CategoryService categoryService = new CategoryService();
+            var categories = categoryService.GetCategories();
+
+            grid.InitializingNewItem += (o, e) => { productsService.AddProduct((ProductDTO)e.NewItem); };
             grid.RowEditEnding += (o, e) =>
             {
-                accesser.EditItem((Product)grid.SelectedItem);
+                productsService.EditProduct((ProductDTO)e.Row.Item);
             };
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NewProduct newProduct = new NewProduct();
+            newProduct.ItemAdded += RefreshItems;
+            newProduct.Show();
+        }
+
+        private void RefreshItems()
+        {
+            grid.ItemsSource = productsService.GetProducts();
         }
     }
 }

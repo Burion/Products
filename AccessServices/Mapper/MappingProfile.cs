@@ -14,6 +14,7 @@ namespace AccessServices.Mapper
             CreateMap<Product, ProductDTO>()
                 .ForMember(pdto => pdto.CategoryName, opt => opt.MapFrom<CategoryResolver>());
 
+            CreateMap<ProductDTO, Product>();
             CreateMap<Category, CategoryDTO>();
             CreateMap<CategoryDTO, Category>();
         }
