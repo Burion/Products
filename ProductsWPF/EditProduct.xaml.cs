@@ -2,6 +2,7 @@
 using AccessServices.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,25 +22,27 @@ namespace ProductsWPF
     {
         ProductService productService;
         ProductDTO _product;
+        public event Action ItemEdited;
+        IEnumerable<CategoryDTO> categories;
+        CategoryDTO _category { get { return categories.Single(c => _product.CategoryName == c.Name); } set { } }
         public EditProduct(ProductDTO product)
         {
             productService = new ProductService();
             _product = product;
-
+            CategoryService categoryService = new CategoryService();
+            categories = categoryService.GetCategories();
+            DataContext = new { _product, _category };
             InitializeComponent();
+            categoryCombo.ItemsSource = categories;
         }
 
         private void Edit_Click(object o, EventArgs e)
         {
-            //product.Name = nameInput.Text;
-            //product.Description = descriptionInput.Text;
-            //product.Price = float.Parse(priceInput.Text);
-            //var category = (CategoryDTO)categoryCombo.SelectedItem;
-            //product.CategoryName = (category.Name);
-            //productService.AddProduct(product, category);
+            _product.CategoryName = ((CategoryDTO)categoryCombo.SelectedItem).Name;
+            productService.EditProduct(_product);
 
-            //ItemAdded();
-            //this.Close();
+            ItemEdited();
+            this.Close();
         }
     }
 }

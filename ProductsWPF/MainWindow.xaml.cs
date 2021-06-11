@@ -46,5 +46,22 @@ namespace ProductsWPF
         {
 
         }
+
+        void TabSelected(object sender, EventArgs e)
+        {
+            switch (((TabItem)sender).Header)
+            {
+                case "Categories":
+                    Categories categoriesPage = new Categories();       
+                    mainFrame.Navigate(categoriesPage);
+                    break;
+
+                case "Products":
+                    Products productsPage = new Products();
+                    mainFrame.Navigate(productsPage);
+                    break;
+
+            }
+        }
     }
 }

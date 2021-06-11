@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:ProductsWPF"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Products">
+      Title="Products"
+      ShowsNavigationUI="False">
 
     <Grid>
         <StackPanel>
@@ -14,9 +15,8 @@
         <DataGrid x:Name="grid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
                 <DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Delete">
-                            
-                        </MenuItem>
+                        <MenuItem Header="Edit" Click="EditContext_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+                        <MenuItem Header="Delete" Click="DeleteContext_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             <DataGrid.Columns>

@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:ProductsWPF"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Categories">
+      Title="Categories"
+      ShowsNavigationUI="False">
     <Page.Resources>
         <Style TargetType="{x:Type DataGridRow}">
             <Style.Triggers>
@@ -17,14 +18,24 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <DataGrid x:Name="grid" AutoGenerateColumns="False" PreviewKeyDown="DataGrid_PreviewKeyDown">
-           
-            <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged }">
+        <StackPanel>
+            
+            <DataGrid x:Name="grid" AutoGenerateColumns="False" PreviewKeyDown="DataGrid_PreviewKeyDown" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Edit" Click="EditContext_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+                        <MenuItem Header="Delete" Click="DeleteContext_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
 
-                </DataGridTextColumn>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged }">
 
-            </DataGrid.Columns>
-        </DataGrid>
+                    </DataGridTextColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Content="Add new category" Click="Add_Click"></Button>
+        </StackPanel>
     </Grid>
 </Page>

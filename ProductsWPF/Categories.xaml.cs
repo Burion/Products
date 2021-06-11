@@ -50,6 +50,10 @@ namespace ProductsWPF
 
             
         }
+        private void RefreshItems()
+        {
+            grid.ItemsSource = catS.GetCategories();
+        }
         private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete)
@@ -57,6 +61,34 @@ namespace ProductsWPF
                 var grid = (DataGrid)sender;
                 catS.DeleteCategory((CategoryDTO)grid.SelectedItem);
             }
+        }
+
+        private void Add_Click(object o, EventArgs e)
+        {
+            NewCategory newCategory = new NewCategory();
+            newCategory.ItemAdded += RefreshItems;
+            newCategory.Show();
+        }
+
+        private void EditContext_Click(object o, EventArgs e)
+        {
+            var menuItem = (MenuItem)o;
+            var contextMenu = (ContextMenu)menuItem.Parent;
+            var item = (DataGrid)contextMenu.PlacementTarget;
+            var category = (CategoryDTO)item.SelectedCells[0].Item;
+            EditCategory editProduct = new EditCategory(category);
+            editProduct.ItemEdited += RefreshItems;
+            editProduct.Show();
+        }
+
+        private void DeleteContext_Click(object o, EventArgs e)
+        {
+            var menuItem = (MenuItem)o;
+            var contextMenu = (ContextMenu)menuItem.Parent;
+            var item = (DataGrid)contextMenu.PlacementTarget;
+            var category = (CategoryDTO)item.SelectedCells[0].Item;
+            catS.DeleteCategory(category);
+            RefreshItems();
         }
 
     }

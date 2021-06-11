@@ -20,7 +20,7 @@
             <TextBox  x:Name="priceInput" PreviewTextInput="PreviewTextInput"></TextBox>
 
             <Label>Category</Label>
-            <ComboBox x:Name="categoryCombo" DisplayMemberPath=""></ComboBox>
+            <ComboBox x:Name="categoryCombo" Text="{Binding CategoryName}" DisplayMemberPath="Name"></ComboBox>
 
             <Button Click="Add_Click" Content="Add"></Button>
 

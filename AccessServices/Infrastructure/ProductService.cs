@@ -13,11 +13,10 @@ namespace AccessServices.Infrastructure
 {
     public class ProductService
     {
-        readonly IDbAccesser<Product> dbAccesser;
+
         readonly IMapper mapper;
         public ProductService()
         {
-            dbAccesser = new DbAccesserEF<Product>();
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
@@ -27,32 +26,49 @@ namespace AccessServices.Infrastructure
 
         public IEnumerable<ProductDTO> GetProducts()
         {
-            var dbItems = dbAccesser.GetItems();
-            return mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(dbItems);
-        }
-
-        public void AddProduct(ProductDTO product, CategoryDTO category)
-        {
-            var dbAccesserCategory = new DbAccesserEF<Category>();
-            var categ = dbAccesserCategory.GetItem(c => c.Name == category.Name);
-            var newProduct = mapper.Map<ProductDTO, Product>(product);
-            newProduct.CategoryId = categ.Id;
-            dbAccesser.AddItem(newProduct);
+            using (var dbAccesser = new DbAccesserEF<Product>())
+            {
+                var dbItems = dbAccesser.GetItems();
+                return mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(dbItems);
+            }
         }
 
         public void AddProduct(ProductDTO product)
         {
-            dbAccesser.AddItem(mapper.Map<ProductDTO, Product>(product));
+            using (var dbAccesser = new DbAccesserEF<Product>())
+            {
+                var dbAccesserCategory = new DbAccesserEF<Category>();
+                var categ = dbAccesserCategory.GetItem(c => c.Name == product.CategoryName);
+                var newProduct = mapper.Map<ProductDTO, Product>(product);
+                newProduct.CategoryId = categ.Id;
+                dbAccesser.AddItem(newProduct);
+            }
         }
 
         public void EditProduct(ProductDTO product)
         {
-            var dbAccesserCategory = new DbAccesserEF<Category>();
-            var categ = dbAccesserCategory.GetItem(c => c.Name == product.CategoryName);
-            var prod = dbAccesser.GetItem(p => p.Id == product.Id);
-            var newProduct = mapper.Map<ProductDTO, Product>(product);
-            newProduct.Category = categ;
-            dbAccesser.EditItem(prod, newProduct);
+            using (var dbAccesser = new DbAccesserEF<Product>())
+            {
+                var dbAccesserCategory = new DbAccesserEF<Category>();
+                var categ = dbAccesserCategory.GetItem(c => c.Name == product.CategoryName);
+                var prod = dbAccesser.GetItem(p => p.Id == product.Id);
+                var newProduct = mapper.Map<ProductDTO, Product>(product);
+                newProduct.CategoryId = categ.Id;
+
+                var origItem = dbAccesser.GetItem(i => i.Id == product.Id);
+                mapper.Map(product, origItem);
+                origItem.CategoryId = categ.Id;
+                dbAccesser.EditItem(origItem);
+            }
+        }
+
+        public void DeleteProduct(ProductDTO product)
+        {
+            using (var dbAccesser = new DbAccesserEF<Product>())
+            {
+                var item = dbAccesser.GetItem(i => i.Id == product.Id);
+                dbAccesser.DeleteItem(item);
+            }
         }
 
     }

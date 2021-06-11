@@ -1,4 +1,5 @@
 ﻿using DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace DataAccess.Infrastructure.EfCore
 {
-    public class DbAccesserEF<T> : IDbAccesser<T> where T : class
+    public class DbAccesserEF<T> : IDbAccesser<T>, IDisposable where T : class
     {
         readonly ProductsContext _context;
         public DbAccesserEF()
@@ -35,9 +36,16 @@ namespace DataAccess.Infrastructure.EfCore
         {
             return _context.Set<T>().Where(i => predicate(i));
         }
+
+
         public IEnumerable<T> GetItems()
         {
             return _context.Set<T>().ToList();
+        }
+
+        public IEnumerable<T> GetItemsAsNoTracking()
+        {
+            return _context.Set<T>().AsNoTracking().ToList();
         }
 
         public void EditItem(T original, T toSet)
@@ -48,6 +56,11 @@ namespace DataAccess.Infrastructure.EfCore
         {
             _context.Update(item);
             _context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

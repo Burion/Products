@@ -8,14 +8,15 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <StackPanel>
-            <Button x:Name="department" Click="AddDepartmentClick">
-                Add Department
-            </Button>
-
-            <Button x:Name="product" Click="ProductsPageClick">
-                Add Product
-            </Button>
-            <Frame x:Name="mainFrame" />
+            <TabControl TabStripPlacement="Top">
+                <TabItem Header="Categories" Selector.Selected="TabSelected">
+                
+                </TabItem>
+                <TabItem Header="Products" Selector.Selected="TabSelected">
+                
+                </TabItem>
+            </TabControl>
+            <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden"></Frame>
         </StackPanel>
     </Grid>
 </Window>

@@ -49,5 +49,34 @@ namespace ProductsWPF
         {
             grid.ItemsSource = productsService.GetProducts();
         }
+
+        private void EditContext_Click(object o, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)o;
+
+            var contextMenu = (ContextMenu)menuItem.Parent;
+
+            var item = (DataGrid)contextMenu.PlacementTarget;
+
+            var product = (ProductDTO)item.SelectedCells[0].Item;
+
+            EditProduct editProduct = new EditProduct(product);
+            editProduct.ItemEdited += RefreshItems;
+            editProduct.Show();
+        }
+
+        private void DeleteContext_Click(object o, EventArgs e)
+        {
+            var menuItem = (MenuItem)o;
+
+            var contextMenu = (ContextMenu)menuItem.Parent;
+
+            var item = (DataGrid)contextMenu.PlacementTarget;
+
+            var product = (ProductDTO)item.SelectedCells[0].Item;
+
+            productsService.DeleteProduct(product);
+            RefreshItems();
+        }
     }
 }

@@ -45,7 +45,7 @@ namespace ProductsWPF
             product.Price = float.Parse(priceInput.Text);
             var category = (CategoryDTO)categoryCombo.SelectedItem;
             product.CategoryName = (category.Name);
-            productService.AddProduct(product, category);
+            productService.AddProduct(product);
 
             ItemAdded();
             this.Close();

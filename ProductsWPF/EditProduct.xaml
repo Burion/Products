@@ -10,16 +10,16 @@
         <StackPanel Orientation="Vertical">
 
             <Label>Name</Label>
-            <TextBox x:Name="nameInput" Text="{Binding Source=_product, Path=Name}"></TextBox>
+            <TextBox x:Name="nameInput" Text="{Binding Path=_product.Name}"></TextBox>
 
             <Label>Description</Label>
-            <TextBox x:Name="descriptionInput" Text="{Binding Source=_product, Path=Description}"></TextBox>
+            <TextBox x:Name="descriptionInput" Text="{Binding Path=_product.Description}"></TextBox>
 
             <Label>Price</Label>
-            <TextBox  x:Name="priceInput"  Text="{Binding Source=_product, Path=Price}"></TextBox>
+            <TextBox  x:Name="priceInput" Text="{Binding Path=_product.Price}"></TextBox>
 
             <Label>Category</Label>
-            <ComboBox x:Name="categoryCombo" DisplayMemberPath=""></ComboBox>
+            <ComboBox x:Name="categoryCombo" DisplayMemberPath="Name" SelectedItem="{Binding Path=_category, Mode=OneWay}"></ComboBox>
 
             <Button Click="Edit_Click" Content="Add"></Button>
 
