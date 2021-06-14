@@ -15,47 +15,68 @@ namespace DataAccess.Infrastructure.Dapper.Partial
         {
             using (SqlConnection dbConnection = new SqlConnection(connectionString))
             {
-                dbConnection.Open();
                 var query = $"insert into [productdb].[dbo].[Categories] (Name) values ('{category.Name}')";
-                SqlCommand command = new SqlCommand(query, dbConnection);
                 dbConnection.Open();
+                SqlCommand command = new SqlCommand(query, dbConnection);
                 command.ExecuteNonQuery();
+                dbConnection.Close();
             }
         }
 
         public void DeleteCategory(Category category)
         {
-            using (IDbConnection dbConnection = new SqlConnection(connectionString))
+            using (SqlConnection dbConnection = new SqlConnection(connectionString))
             {
                 var query = $"delete from [productdb].[dbo].[Categories] where Id = {category.Id}";
-                //dbConnection.Query(query);
+                dbConnection.Open();
+                SqlCommand command = new SqlCommand(query, dbConnection);
+                command.ExecuteNonQuery();
+                dbConnection.Close();
             }
         }
 
         public void EditCategory(Category category)
         {
-            using (IDbConnection dbConnection = new SqlConnection(connectionString))
+            using (SqlConnection dbConnection = new SqlConnection(connectionString))
             {
                 var query = $"update [productdb].[dbo].[Categories] set Name = '{category.Name}' where Id = {category.Id}";
-                //dbConnection.Query(query);
+                dbConnection.Open();
+                SqlCommand command = new SqlCommand(query, dbConnection);
+                command.ExecuteNonQuery();
+                dbConnection.Close();
             }
         }
 
         public IEnumerable<Category> GetCategories()
         {
-            using (IDbConnection dbConnection = new SqlConnection(connectionString))
+            using (SqlConnection dbConnection = new SqlConnection(connectionString))
             {
                 var query = $"select * from [productdb].[dbo].[Categories]";
-                return null;
+                dbConnection.Open();
+                SqlCommand command = new SqlCommand(query, dbConnection);
+                var reader = command.ExecuteReader();
+                List<Category> categories = new List<Category>();
+                while(reader.Read())
+                {
+                    var c = new Category() { Id = (int)reader.GetValue(0), Name = (string)reader.GetValue(1) };
+                    categories.Add(c);
+                }
+                dbConnection.Close();
+                return categories;
             }
         }
 
         public Category GetCategory(int id)
         {
-            using (IDbConnection dbConnection = new SqlConnection(connectionString))
+            using (SqlConnection dbConnection = new SqlConnection(connectionString))
             {
                 var query = $"select * from [productdb].[dbo].[Categories] where Id = {id}";
-                return null;
+                dbConnection.Open();
+                SqlCommand command = new SqlCommand(query, dbConnection);
+                var reader = command.ExecuteReader();
+                var c = new Category() { Id = (int)reader.GetValue(0), Name = (string)reader.GetValue(1) };
+                dbConnection.Close();
+                return c;
             }
         }
     }

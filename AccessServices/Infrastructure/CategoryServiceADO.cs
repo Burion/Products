@@ -1,4 +1,5 @@
 ﻿using AccessServices.DTOs;
+using AccessServices.Interfaces;
 using AccessServices.Mapper;
 using AutoMapper;
 using DataAccess.Infrastructure.Dapper.Partial;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace AccessServices.Infrastructure
 {
-    public class CategoryServiceADO
+    public class CategoryServiceADO : ICategoryService
     {
         DbAccesserCategoryADO dbAccesser;
         readonly IMapper mapper;
