@@ -11,7 +11,7 @@ namespace AccessServices.Ninject
     {
         public override void Load()
         {
-            Bind<ICategoryService>().To<CategoryService>();
+            Bind<ICategoryService>().To<CategoryServiceDapper>();
         }
     }
 }

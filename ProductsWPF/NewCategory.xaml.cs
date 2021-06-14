@@ -1,7 +1,10 @@
 ﻿using AccessServices.DTOs;
 using AccessServices.Infrastructure;
+using AccessServices.Interfaces;
+using Ninject;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,7 +34,10 @@ namespace ProductsWPF
 
         private void Add_Click(object o, EventArgs e)
         {
-            CategoryService categoryService = new CategoryService();
+            var kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+            ICategoryService categoryService = kernel.Get<ICategoryService>();
+
             categoryService.AddCategory(_category);
             ItemAdded();
             this.Close();

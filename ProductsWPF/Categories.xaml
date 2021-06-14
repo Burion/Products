@@ -30,7 +30,7 @@
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged }">
-
+                        
                     </DataGridTextColumn>
 
                 </DataGrid.Columns>

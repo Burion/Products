@@ -9,7 +9,15 @@
     <Grid>
         <StackPanel>
             <Label>Category name</Label>
-            <TextBox x:Name="nameInput" Text="{Binding Name}"></TextBox>
+            <TextBox x:Name="nameInput">
+                <TextBox.Text>
+                    <Binding Path="Name">
+                        <Binding.ValidationRules>
+                            <DataErrorValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Button Click="Add_Click" Content="Add"></Button>
         </StackPanel>
     </Grid>
