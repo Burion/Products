@@ -22,12 +22,15 @@ namespace ProductsWPF
     {
         readonly ProductService productService;
         public event Action ItemAdded;
+        ProductDTO _product;
         public NewProduct()
         {
             InitializeComponent();
             productService = new ProductService();
+            _product = new ProductDTO();
             CategoryService categoryService = new CategoryService();
             categoryCombo.ItemsSource = categoryService.GetCategories();
+            DataContext = _product;
         }
 
         private void PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -38,17 +41,22 @@ namespace ProductsWPF
 
         private void Add_Click(object o, EventArgs e)
         {
-
-            ProductDTO product = new ProductDTO();
-            product.Name = nameInput.Text;
-            product.Description = descriptionInput.Text;
-            product.Price = float.Parse(priceInput.Text);
+            nameInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            descriptionInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            priceInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            categoryCombo.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
+            if (Validation.GetHasError(nameInput) || Validation.GetHasError(descriptionInput) || Validation.GetHasError(priceInput) || Validation.GetHasError(categoryCombo))
+            {
+                return;
+            }
             var category = (CategoryDTO)categoryCombo.SelectedItem;
-            product.CategoryName = (category.Name);
-            productService.AddProduct(product);
+            _product.CategoryName = (category.Name);
+            productService.AddProduct(_product);
 
             ItemAdded();
             this.Close();
         }
+
+        
     }
 }

@@ -37,6 +37,11 @@ namespace ProductsWPF
 
         private void Edit_Click(object o, EventArgs e)
         {
+            nameInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            if (Validation.GetHasError(nameInput))
+            {
+                return;
+            }
             categoryService.EditCategory(_category);
             ItemEdited();
             Close();

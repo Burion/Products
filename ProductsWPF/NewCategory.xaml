@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProductsWPF"
+        xmlns:local="clr-namespace:ProductsWPF" xmlns:validation="clr-namespace:ProductsWPF.ValidationRules"
         mc:Ignorable="d"
         Title="NewCategory" Height="450" Width="800">
     <Grid>
@@ -11,13 +11,15 @@
             <Label>Category name</Label>
             <TextBox x:Name="nameInput">
                 <TextBox.Text>
-                    <Binding Path="Name">
+                    <Binding x:Name="binding" Path="Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnNotifyDataErrors="True" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                         <Binding.ValidationRules>
-                            <DataErrorValidationRule/>
+                            <DataErrorValidationRule ValidatesOnTargetUpdated="True"/>
+                            <validation:StringValidationRule></validation:StringValidationRule>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
+            <TextBlock Foreground="Red" Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=nameInput}"/>
             <Button Click="Add_Click" Content="Add"></Button>
         </StackPanel>
     </Grid>

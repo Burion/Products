@@ -34,11 +34,22 @@ namespace ProductsWPF
 
         private void Add_Click(object o, EventArgs e)
         {
+            nameInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            if(Validation.GetHasError(nameInput))
+            {
+                return;
+            }
             var kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
             ICategoryService categoryService = kernel.Get<ICategoryService>();
-
-            categoryService.AddCategory(_category);
+            try
+            {
+                categoryService.AddCategory(_category);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.GetType() } - Category with similar name already exists.");
+            }
             ItemAdded();
             this.Close();
         }

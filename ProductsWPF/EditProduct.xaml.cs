@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -35,9 +36,21 @@ namespace ProductsWPF
             InitializeComponent();
             categoryCombo.ItemsSource = categories;
         }
+        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
 
         private void Edit_Click(object o, EventArgs e)
         {
+            nameInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            descriptionInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            priceInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            if (Validation.GetHasError(nameInput) || Validation.GetHasError(descriptionInput) || Validation.GetHasError(priceInput) || Validation.GetHasError(categoryCombo))
+            {
+                return;
+            }
             _product.CategoryName = ((CategoryDTO)categoryCombo.SelectedItem).Name;
             productService.EditProduct(_product);
 
