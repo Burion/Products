@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.Interfaces;
+using DataAccess.Models;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,14 @@ using System.Text;
 
 namespace DataAccess.Infrastructure.Dapper.Partial
 {
-    public class DbAccesserCategoryADO 
+    public class DbAccesserCategoryADO : IDbAccesserCategory
     {
         string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
         public void AddCategory(Category category)
         {
             using (SqlConnection dbConnection = new SqlConnection(connectionString))
             {
-                var query = $"insert into [productdb].[dbo].[Categories] (Name) values ('{category.Name}')";
+                var query = $"insert into [productswpf].[dbo].[Categories] (Name) values ('{category.Name}')";
                 dbConnection.Open();
                 SqlCommand command = new SqlCommand(query, dbConnection);
                 command.ExecuteNonQuery();
@@ -27,7 +28,7 @@ namespace DataAccess.Infrastructure.Dapper.Partial
         {
             using (SqlConnection dbConnection = new SqlConnection(connectionString))
             {
-                var query = $"delete from [productdb].[dbo].[Categories] where Id = {category.Id}";
+                var query = $"delete from [productswpf].[dbo].[Categories] where Id = {category.Id}";
                 dbConnection.Open();
                 SqlCommand command = new SqlCommand(query, dbConnection);
                 command.ExecuteNonQuery();
@@ -35,11 +36,16 @@ namespace DataAccess.Infrastructure.Dapper.Partial
             }
         }
 
+        public void Dispose()
+        {
+            
+        }
+
         public void EditCategory(Category category)
         {
             using (SqlConnection dbConnection = new SqlConnection(connectionString))
             {
-                var query = $"update [productdb].[dbo].[Categories] set Name = '{category.Name}' where Id = {category.Id}";
+                var query = $"update [productswpf].[dbo].[Categories] set Name = '{category.Name}' where Id = {category.Id}";
                 dbConnection.Open();
                 SqlCommand command = new SqlCommand(query, dbConnection);
                 command.ExecuteNonQuery();
@@ -51,7 +57,7 @@ namespace DataAccess.Infrastructure.Dapper.Partial
         {
             using (SqlConnection dbConnection = new SqlConnection(connectionString))
             {
-                var query = $"select * from [productdb].[dbo].[Categories]";
+                var query = $"select * from [productswpf].[dbo].[Categories]";
                 dbConnection.Open();
                 SqlCommand command = new SqlCommand(query, dbConnection);
                 var reader = command.ExecuteReader();
@@ -70,7 +76,7 @@ namespace DataAccess.Infrastructure.Dapper.Partial
         {
             using (SqlConnection dbConnection = new SqlConnection(connectionString))
             {
-                var query = $"select * from [productdb].[dbo].[Categories] where Id = {id}";
+                var query = $"select * from [productswpf].[dbo].[Categories] where Id = {id}";
                 dbConnection.Open();
                 SqlCommand command = new SqlCommand(query, dbConnection);
                 var reader = command.ExecuteReader();

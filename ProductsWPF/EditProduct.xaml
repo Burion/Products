@@ -59,7 +59,7 @@
             </ComboBox>
             <TextBlock Foreground="Red" Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=categoryCombo}"/>
 
-            <Button Click="Edit_Click" Content="Add"></Button>
+            <Button Click="Edit_Click" Content="Edit"></Button>
 
         </StackPanel>
     </Grid>

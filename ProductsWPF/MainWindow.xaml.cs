@@ -1,5 +1,7 @@
-﻿using DataAccess.Infrastructure.EfCore;
-using DataAccess.Models;
+﻿
+using AccessServices.Interfaces;
+using AccessServices.Ninject;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,25 +24,14 @@ namespace ProductsWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        readonly ICategoryService categoryService;
         public MainWindow()
         {
+
             InitializeComponent();
-
-            DbAccesserEF<Category> db = new DbAccesserEF<Category>();
-            var categories = db.GetItems();
         }
 
-        void AddDepartmentClick(object o, EventArgs e)
-        {
-            Categories categories = new Categories();
-            mainFrame.Navigate(categories);
-        }
 
-        void ProductsPageClick(object o, EventArgs e)
-        {
-            Products products = new Products();
-            mainFrame.Navigate(products);
-        }
 
         private void product_Click(object sender, RoutedEventArgs e)
         {
@@ -52,8 +43,11 @@ namespace ProductsWPF
             switch (((TabItem)sender).Header)
             {
                 case "Categories":
-                    Categories categoriesPage = new Categories();       
-                    mainFrame.Navigate(categoriesPage);
+                    var module = new Bindings();
+                    var kernel = new StandardKernel(module);
+                    var page = kernel.Get<Categories>();
+
+                    mainFrame.Navigate(page);
                     break;
 
                 case "Products":

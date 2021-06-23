@@ -1,5 +1,4 @@
-﻿using DataAccess.Infrastructure.EfCore;
-using DataAccess.Models;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,21 +26,12 @@ namespace ProductsWPF
     public partial class Categories : Page
     {
         ICategoryService catS;
-        public Categories()
+        public Categories(ICategoryService categoryService)
         {
+            catS = categoryService;
             InitializeComponent();
-
-            //DbAccesserEF<Category> accesser = new DbAccesserEF<Category>();
-            //catS = new CategoryService();
-
-            var kernel = new StandardKernel();
-            kernel.Load(Assembly.GetExecutingAssembly());
-            catS = kernel.Get<ICategoryService>();
-            
             grid.ItemsSource = catS.GetCategories();
-
             grid.InitializingNewItem += (o, e) => { catS.AddCategory((CategoryDTO)e.NewItem); grid.ItemsSource = catS.GetCategories();  };
-
 
             grid.RowEditEnding += (o, e) => 
             {
