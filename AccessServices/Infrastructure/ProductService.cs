@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using AccessServices.Mapper;
 using AccessServices.DTOs;
+using AccessServices.Helpers;
 
 namespace AccessServices.Infrastructure
 {
@@ -26,7 +27,7 @@ namespace AccessServices.Infrastructure
 
         public IEnumerable<ProductDTO> GetProducts()
         {
-            using (var dbAccesser = new DbAccesserEF<Product>())
+            using (var dbAccesser = new DbAccesserEF<Product>(BindingsHendler.GetContext()))
             {
                 var dbItems = dbAccesser.GetItems();
                 return mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(dbItems);
@@ -35,9 +36,9 @@ namespace AccessServices.Infrastructure
 
         public void AddProduct(ProductDTO product)
         {
-            using (var dbAccesser = new DbAccesserEF<Product>())
+            using (var dbAccesser = new DbAccesserEF<Product>(BindingsHendler.GetContext()))
             {
-                var dbAccesserCategory = new DbAccesserEF<Category>();
+                var dbAccesserCategory = new DbAccesserEF<Category>(BindingsHendler.GetContext());
                 var categ = dbAccesserCategory.GetItem(c => c.Name == product.CategoryName);
                 var newProduct = mapper.Map<ProductDTO, Product>(product);
                 newProduct.CategoryId = categ.Id;
@@ -47,9 +48,9 @@ namespace AccessServices.Infrastructure
 
         public void EditProduct(ProductDTO product)
         {
-            using (var dbAccesser = new DbAccesserEF<Product>())
+            using (var dbAccesser = new DbAccesserEF<Product>(BindingsHendler.GetContext()))
             {
-                var dbAccesserCategory = new DbAccesserEF<Category>();
+                var dbAccesserCategory = new DbAccesserEF<Category>(BindingsHendler.GetContext());
                 var categ = dbAccesserCategory.GetItem(c => c.Name == product.CategoryName);
                 var prod = dbAccesser.GetItem(p => p.Id == product.Id);
                 var newProduct = mapper.Map<ProductDTO, Product>(product);
@@ -64,7 +65,7 @@ namespace AccessServices.Infrastructure
 
         public void DeleteProduct(ProductDTO product)
         {
-            using (var dbAccesser = new DbAccesserEF<Product>())
+            using (var dbAccesser = new DbAccesserEF<Product>(BindingsHendler.GetContext()))
             {
                 var item = dbAccesser.GetItem(i => i.Id == product.Id);
                 dbAccesser.DeleteItem(item);

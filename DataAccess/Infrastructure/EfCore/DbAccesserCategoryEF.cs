@@ -8,7 +8,10 @@ namespace DataAccess.Infrastructure.EfCore
 {
     public class DbAccesserCategoryEF : DbAccesserEF<Category>, IDbAccesserCategory
     {
+        public DbAccesserCategoryEF(ProductsContext context) :base(context)
+        {
 
+        }
         public void AddCategory(Category category)
         {
             AddItem(category);

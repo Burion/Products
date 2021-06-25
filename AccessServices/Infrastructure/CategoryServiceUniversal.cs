@@ -18,68 +18,48 @@ namespace AccessServices.Infrastructure
     public class CategoryServiceUniversal : ICategoryService
     {
         readonly IMapper mapper;
-        IDbAccesserCategory Accesser
-        {
-            get
-            {
-                INinjectModule module = new Bindings(); 
-                var kernel = new StandardKernel(module);
-                return kernel.Get<IDbAccesserCategory>();
-            }
-        }
-        public CategoryServiceUniversal()
+        readonly IDbAccesserCategory _dbAccesser;
+        
+        public CategoryServiceUniversal(IDbAccesserCategory dbAccesser)
         {
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
             });
             mapper = mappingConfig.CreateMapper();
+            _dbAccesser = dbAccesser;
         }
 
         public CategoryDTO GetCategory(int id)
         {
-            using (IDbAccesserCategory dbAccesser = Accesser)
-            {
-                var item = dbAccesser.GetCategory(id);
-                return mapper.Map<Category, CategoryDTO>(item);
-            }
+            var item = _dbAccesser.GetCategory(id);
+            return mapper.Map<Category, CategoryDTO>(item);
         }
 
         public IEnumerable<CategoryDTO> GetCategories()
         {
-            using (IDbAccesserCategory dbAccesser = Accesser)
-            {
-                var items = dbAccesser.GetCategories();
-                return mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(items);
-            }
+
+            var items = _dbAccesser.GetCategories();
+            return mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(items);
         }
 
         public void AddCategory(CategoryDTO item)
         {
-            using (IDbAccesserCategory dbAccesser = Accesser)
-            {
-                dbAccesser.AddCategory(mapper.Map<CategoryDTO, Category>(item));
-            }
-
+            _dbAccesser.AddCategory(mapper.Map<CategoryDTO, Category>(item));
         }
 
         public void EditCategory(CategoryDTO item)
         {
-            using (IDbAccesserCategory dbAccesser = Accesser)
-            {
-                var _item = dbAccesser.GetCategory(item.Id);
-                mapper.Map(item, _item);
-                dbAccesser.EditCategory(mapper.Map(item, _item));
-            }
+            var _item = _dbAccesser.GetCategory(item.Id);
+            mapper.Map(item, _item);
+            _dbAccesser.EditCategory(mapper.Map(item, _item));
         }
 
         public void DeleteCategory(CategoryDTO item)
         {
-            using (IDbAccesserCategory dbAccesser = Accesser)
-            {
-                var _item = dbAccesser.GetCategory(item.Id);
-                dbAccesser.DeleteCategory(_item);
-            }
+
+            var _item = _dbAccesser.GetCategory(item.Id);
+            _dbAccesser.DeleteCategory(_item);
         }
     }
 }

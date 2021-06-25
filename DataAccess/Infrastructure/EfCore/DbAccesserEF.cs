@@ -12,9 +12,10 @@ namespace DataAccess.Infrastructure.EfCore
     public class DbAccesserEF<T> : IDbAccesser<T>, IDisposable where T : class
     {
         readonly ProductsContext _context;
-        public DbAccesserEF()
+        public DbAccesserEF(ProductsContext context)
         {
-            _context = new ProductsContext();
+            _context = context;
+            _context.Database.EnsureCreated();
         }
         public void AddItem(T item)
         {

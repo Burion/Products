@@ -1,21 +1,22 @@
 ﻿using AccessServices.Infrastructure;
 using AccessServices.Interfaces;
-
+using DataAccess;
+using DataAccess.Infrastructure.EfCore;
+using DataAccess.Interfaces;
 using Ninject.Modules;
-using ProductsWPF;
 using ProductsWPF.IoC;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AccessServices.Ninject
+namespace ProductsWPF.Integration.Tests.Ninject
 {
     public class Bindings : IoCBindings
     {
         public override void Load()
         {
-            Bind<Categories>().ToSelf().InTransientScope();
             base.Load();
+            Rebind<ProductsContext>().To<ProductsContextInMemory>();
         }
     }
 }

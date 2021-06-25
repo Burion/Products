@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AccessServices\AccessServices.csproj" />
+    <ProjectReference Include="..\ProductsWPF.IoC\ProductsWPF.IoC.csproj" />
   </ItemGroup>
 
 </Project>
