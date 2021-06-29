@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Configuration;
 using System.Collections.Specialized;
+using DataAccess.ConfigurationInfrastructure;
 
 namespace DataAccess
 {
@@ -16,9 +17,11 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Category>()
-                .HasIndex(u => u.Name)
-                .IsUnique();
+            var categoryConfiguration = new CategoryEntityConfiguration(builder);
+            categoryConfiguration.Configure();
+
+            var productConfiguration = new ProductEntityConfiguration(builder);
+            productConfiguration.Configure();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

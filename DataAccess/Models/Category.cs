@@ -1,4 +1,4 @@
-﻿using DataAccess.Attrubutes;
+﻿using DataAccess.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,4 +1,4 @@
-﻿using AccessServices.DTOs;
+﻿using AccessServices.Dtos;
 using AccessServices.Infrastructure;
 using AccessServices.Interfaces;
 using Ninject;
@@ -24,8 +24,8 @@ namespace ProductsWPF
     {
         ICategoryService categoryService;
         public event Action ItemEdited;
-        CategoryDTO _category;
-        public EditCategory(CategoryDTO category)
+        CategoryDto _category;
+        public EditCategory(CategoryDto category)
         {
             var kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());

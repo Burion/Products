@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AccessServices.DTOs
+namespace AccessServices.Dtos
 {
-    public class ProductDTO
+    public class ProductDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

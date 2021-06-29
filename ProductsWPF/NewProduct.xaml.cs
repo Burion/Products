@@ -1,4 +1,4 @@
-﻿using AccessServices.DTOs;
+﻿using AccessServices.Dtos;
 using AccessServices.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -22,12 +22,12 @@ namespace ProductsWPF
     {
         readonly ProductService productService;
         public event Action ItemAdded;
-        ProductDTO _product;
+        ProductDto _product;
         public NewProduct()
         {
             InitializeComponent();
             productService = new ProductService();
-            _product = new ProductDTO();
+            _product = new ProductDto();
             CategoryService categoryService = new CategoryService();
             categoryCombo.ItemsSource = categoryService.GetCategories();
             DataContext = _product;
@@ -49,7 +49,7 @@ namespace ProductsWPF
             {
                 return;
             }
-            var category = (CategoryDTO)categoryCombo.SelectedItem;
+            var category = (CategoryDto)categoryCombo.SelectedItem;
             _product.CategoryName = (category.Name);
             productService.AddProduct(_product);
 

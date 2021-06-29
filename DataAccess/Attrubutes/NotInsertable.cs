@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccess.Attrubutes
+namespace DataAccess.Attributes
 {
     class NotInsertable: Attribute
     {

@@ -14,8 +14,6 @@ namespace DataAccess.Interfaces
 
         IEnumerable<T> GetItems(Predicate<T> predicate);
         IEnumerable<T> GetItems();
-
-        void EditItem(T original, T toSet);
         void EditItem(T item);
     }
 }

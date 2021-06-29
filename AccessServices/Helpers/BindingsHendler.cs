@@ -9,16 +9,17 @@ namespace AccessServices.Helpers
 {
     public static class BindingsHendler
     {
-        static StandardKernel _kernel;
+        private readonly static StandardKernel _kernel;
+
         static BindingsHendler()
         {
             var module = new Bindings();
             var kernel = new StandardKernel(module);
             _kernel = kernel;
         }
+
         public static ProductsContext GetContext()
         {
-            
             return _kernel.Get<ProductsContext>();
         }
 

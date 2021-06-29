@@ -24,8 +24,6 @@ namespace DataAccess
                 new Category() { Id = -1, Name = "Sample1" },
                 new Category() { Id = -2, Name = "Sample2" }
                 );
-            
-
         }
     }
 }

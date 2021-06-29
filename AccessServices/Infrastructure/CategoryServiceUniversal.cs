@@ -1,4 +1,4 @@
-﻿using AccessServices.DTOs;
+﻿using AccessServices.Dtos;
 using AccessServices.Interfaces;
 using AccessServices.Mapper;
 using AccessServices.Ninject;
@@ -30,32 +30,32 @@ namespace AccessServices.Infrastructure
             _dbAccesser = dbAccesser;
         }
 
-        public CategoryDTO GetCategory(int id)
+        public CategoryDto GetCategory(int id)
         {
             var item = _dbAccesser.GetCategory(id);
-            return mapper.Map<Category, CategoryDTO>(item);
+            return mapper.Map<Category, CategoryDto>(item);
         }
 
-        public IEnumerable<CategoryDTO> GetCategories()
+        public IEnumerable<CategoryDto> GetCategories()
         {
 
             var items = _dbAccesser.GetCategories();
-            return mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(items);
+            return mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDto>>(items);
         }
 
-        public void AddCategory(CategoryDTO item)
+        public void AddCategory(CategoryDto item)
         {
-            _dbAccesser.AddCategory(mapper.Map<CategoryDTO, Category>(item));
+            _dbAccesser.AddCategory(mapper.Map<CategoryDto, Category>(item));
         }
 
-        public void EditCategory(CategoryDTO item)
+        public void EditCategory(CategoryDto item)
         {
             var _item = _dbAccesser.GetCategory(item.Id);
             mapper.Map(item, _item);
             _dbAccesser.EditCategory(mapper.Map(item, _item));
         }
 
-        public void DeleteCategory(CategoryDTO item)
+        public void DeleteCategory(CategoryDto item)
         {
 
             var _item = _dbAccesser.GetCategory(item.Id);

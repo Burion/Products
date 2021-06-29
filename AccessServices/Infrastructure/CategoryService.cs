@@ -1,4 +1,4 @@
-﻿using AccessServices.DTOs;
+﻿using AccessServices.Dtos;
 using AccessServices.Helpers;
 using AccessServices.Interfaces;
 using AccessServices.Mapper;
@@ -16,61 +16,61 @@ namespace AccessServices.Infrastructure
 {
     public class CategoryService: ICategoryService
     {
-
         readonly IMapper mapper;
+     
         public CategoryService()
         {
-
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
             });
+
             mapper = mappingConfig.CreateMapper();
         }
 
-        public CategoryDTO GetCategory(int id)
+        public CategoryDto GetCategory(int id)
         {
             using (var dbAccesser = new DbAccesserEF<Category>(BindingsHendler.GetContext()))
             { 
                 var item = dbAccesser.GetItem(c => c.Id == id);
-                return mapper.Map<Category, CategoryDTO>(item);
+
+                return mapper.Map<Category, CategoryDto>(item);
             }
         }
 
-        public IEnumerable<CategoryDTO> GetCategories()
+        public IEnumerable<CategoryDto> GetCategories()
         {
             using (var dbAccesser = new DbAccesserEF<Category>(BindingsHendler.GetContext()))
             {
-                var items = dbAccesser.GetItems();
-                return mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(items);
+                var categories = dbAccesser.GetItems();
+
+                return mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDto>>(categories);
             }
         }
 
-        public void AddCategory(CategoryDTO item)
+        public void AddCategory(CategoryDto categoryDto)
         {
             using (var dbAccesser = new DbAccesserEF<Category>(BindingsHendler.GetContext()))
             {
-                dbAccesser.AddItem(mapper.Map<CategoryDTO, Category>(item));
-            }
-            
+                dbAccesser.AddItem(mapper.Map<CategoryDto, Category>(categoryDto));
+            }   
         }
 
-        public void EditCategory(CategoryDTO item)
+        public void EditCategory(CategoryDto categoryDto)
         {
             using (var dbAccesser = new DbAccesserEF<Category>(BindingsHendler.GetContext()))
             {
-                var _item = dbAccesser.GetItem(i => i.Id == item.Id);
-                mapper.Map(item, _item);
-                dbAccesser.EditItem(mapper.Map(item, _item));
+                var category = dbAccesser.GetItem(i => i.Id == categoryDto.Id);
+                dbAccesser.EditItem(mapper.Map(categoryDto, category));
             }
         }
 
-        public void DeleteCategory(CategoryDTO item)
+        public void DeleteCategory(CategoryDto categoryDto)
         {
             using (var dbAccesser = new DbAccesserEF<Category>(BindingsHendler.GetContext()))
             {
-                var _item = dbAccesser.GetItem(i => i.Id == item.Id);
-                dbAccesser.DeleteItem(_item);
+                var category = dbAccesser.GetItem(i => i.Id == categoryDto.Id);
+                dbAccesser.DeleteItem(category);
             }
         }
     }

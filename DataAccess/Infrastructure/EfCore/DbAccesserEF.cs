@@ -38,7 +38,6 @@ namespace DataAccess.Infrastructure.EfCore
             return _context.Set<T>().Where(i => predicate(i));
         }
 
-
         public IEnumerable<T> GetItems()
         {
             return _context.Set<T>().ToList();
@@ -49,10 +48,6 @@ namespace DataAccess.Infrastructure.EfCore
             return _context.Set<T>().AsNoTracking().ToList();
         }
 
-        public void EditItem(T original, T toSet)
-        {
-            //TOTO logic editing
-        }
         public void EditItem(T item)
         {
             _context.Update(item);

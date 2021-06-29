@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AccessServices.DTOs;
+using AccessServices.Dtos;
 using AutoMapper;
 using DataAccess.Models;
 
 namespace AccessServices.Mapper
 {
-    class CategoryResolver : IValueResolver<Product, ProductDTO, string>
+    class CategoryResolver : IValueResolver<Product, ProductDto, string>
     {
-        public string Resolve(Product source, ProductDTO destination, string member, ResolutionContext context)
+        public string Resolve(Product source, ProductDto destination, string member, ResolutionContext context)
         {
             return source.Category.Name;
         }

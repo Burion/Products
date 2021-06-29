@@ -1,4 +1,4 @@
-using AccessServices.DTOs;
+using AccessServices.Dtos;
 using AccessServices.Interfaces;
 using DataAccess;
 using Ninject;
@@ -18,25 +18,30 @@ namespace ProductsWPF.Integration.Tests
         {
             var module = new Bindings();
             kernel = new StandardKernel(module);
-
         }
+
         [Fact]
-        public void Adding()
+        public void AddingCategoryRecord()
         {
             var service = kernel.Get<ICategoryService>();
-            var category = new CategoryDTO() { Name = "Test" };
+            var category = new CategoryDto() { Name = "Test" };
             service.AddCategory(category);
             var categories = service.GetCategories();
+
             bool exists = categories.Select(c => c.Name).Contains("Test");
+
             Assert.True(exists);
         }
+
         [Fact]
-        public void Deleting()
+        public void DeletingCategoryRecord()
         {
             var service = kernel.Get<ICategoryService>();
-            service.DeleteCategory(new CategoryDTO() { Id = -1 });
+            service.DeleteCategory(new CategoryDto() { Id = -1 });
             var categories = service.GetCategories();
+
             bool exists = categories.Select(c => c.Id).Contains(-1);
+
             Assert.False(exists);
         }
     }

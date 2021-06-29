@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AccessServices;
-using AccessServices.DTOs;
+using AccessServices.Dtos;
 using AccessServices.Infrastructure;
 using Ninject;
 using System.Reflection;
@@ -25,31 +25,32 @@ namespace ProductsWPF
     /// </summary>
     public partial class Categories : Page
     {
-        ICategoryService catS;
+        ICategoryService categoryService;
         public Categories(ICategoryService categoryService)
         {
-            catS = categoryService;
+            this.categoryService = categoryService;
             InitializeComponent();
-            grid.ItemsSource = catS.GetCategories();
-            grid.InitializingNewItem += (o, e) => { catS.AddCategory((CategoryDTO)e.NewItem); grid.ItemsSource = catS.GetCategories();  };
+            grid.ItemsSource = this.categoryService.GetCategories();
+            grid.InitializingNewItem += (o, e) => { 
+                this.categoryService.AddCategory((CategoryDto)e.NewItem);
+                grid.ItemsSource = this.categoryService.GetCategories();  
+            };
 
             grid.RowEditEnding += (o, e) => 
             {
-                catS.EditCategory((CategoryDTO)e.Row.Item);
+                this.categoryService.EditCategory((CategoryDto)e.Row.Item);
             };
-
-            
         }
         private void RefreshItems()
         {
-            grid.ItemsSource = catS.GetCategories();
+            grid.ItemsSource = categoryService.GetCategories();
         }
         private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete)
             {
                 var grid = (DataGrid)sender;
-                catS.DeleteCategory((CategoryDTO)grid.SelectedItem);
+                categoryService.DeleteCategory((CategoryDto)grid.SelectedItem);
             }
         }
 
@@ -65,7 +66,7 @@ namespace ProductsWPF
             var menuItem = (MenuItem)o;
             var contextMenu = (ContextMenu)menuItem.Parent;
             var item = (DataGrid)contextMenu.PlacementTarget;
-            var category = (CategoryDTO)item.SelectedCells[0].Item;
+            var category = (CategoryDto)item.SelectedCells[0].Item;
             EditCategory editProduct = new EditCategory(category);
             editProduct.ItemEdited += RefreshItems;
             editProduct.Show();
@@ -76,8 +77,8 @@ namespace ProductsWPF
             var menuItem = (MenuItem)o;
             var contextMenu = (ContextMenu)menuItem.Parent;
             var item = (DataGrid)contextMenu.PlacementTarget;
-            var category = (CategoryDTO)item.SelectedCells[0].Item;
-            catS.DeleteCategory(category);
+            var category = (CategoryDto)item.SelectedCells[0].Item;
+            categoryService.DeleteCategory(category);
             RefreshItems();
         }
 

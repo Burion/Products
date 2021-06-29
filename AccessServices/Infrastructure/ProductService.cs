@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using AccessServices.Mapper;
-using AccessServices.DTOs;
+using AccessServices.Dtos;
 using AccessServices.Helpers;
 
 namespace AccessServices.Infrastructure
@@ -22,38 +22,39 @@ namespace AccessServices.Infrastructure
             {
                 mc.AddProfile(new MappingProfile());
             });
+
             mapper = mappingConfig.CreateMapper();
         }
 
-        public IEnumerable<ProductDTO> GetProducts()
+        public IEnumerable<ProductDto> GetProducts()
         {
             using (var dbAccesser = new DbAccesserEF<Product>(BindingsHendler.GetContext()))
             {
                 var dbItems = dbAccesser.GetItems();
-                return mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(dbItems);
+                return mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(dbItems);
             }
         }
 
-        public void AddProduct(ProductDTO product)
+        public void AddProduct(ProductDto product)
         {
             using (var dbAccesser = new DbAccesserEF<Product>(BindingsHendler.GetContext()))
             {
                 var dbAccesserCategory = new DbAccesserEF<Category>(BindingsHendler.GetContext());
-                var categ = dbAccesserCategory.GetItem(c => c.Name == product.CategoryName);
-                var newProduct = mapper.Map<ProductDTO, Product>(product);
-                newProduct.CategoryId = categ.Id;
+                var category = dbAccesserCategory.GetItem(c => c.Name == product.CategoryName);
+                var newProduct = mapper.Map<ProductDto, Product>(product);
+                newProduct.CategoryId = category.Id;
                 dbAccesser.AddItem(newProduct);
             }
         }
 
-        public void EditProduct(ProductDTO product)
+        public void EditProduct(ProductDto product)
         {
             using (var dbAccesser = new DbAccesserEF<Product>(BindingsHendler.GetContext()))
             {
                 var dbAccesserCategory = new DbAccesserEF<Category>(BindingsHendler.GetContext());
                 var categ = dbAccesserCategory.GetItem(c => c.Name == product.CategoryName);
                 var prod = dbAccesser.GetItem(p => p.Id == product.Id);
-                var newProduct = mapper.Map<ProductDTO, Product>(product);
+                var newProduct = mapper.Map<ProductDto, Product>(product);
                 newProduct.CategoryId = categ.Id;
 
                 var origItem = dbAccesser.GetItem(i => i.Id == product.Id);
@@ -63,7 +64,7 @@ namespace AccessServices.Infrastructure
             }
         }
 
-        public void DeleteProduct(ProductDTO product)
+        public void DeleteProduct(ProductDto product)
         {
             using (var dbAccesser = new DbAccesserEF<Product>(BindingsHendler.GetContext()))
             {
@@ -71,6 +72,5 @@ namespace AccessServices.Infrastructure
                 dbAccesser.DeleteItem(item);
             }
         }
-
     }
 }

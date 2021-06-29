@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AccessServices.DTOs;
+using AccessServices.Dtos;
 using AutoMapper;
 using DataAccess.Models;
 
@@ -11,12 +11,12 @@ namespace AccessServices.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<Product, ProductDTO>()
+            CreateMap<Product, ProductDto>()
                 .ForMember(pdto => pdto.CategoryName, opt => opt.MapFrom<CategoryResolver>());
 
-            CreateMap<ProductDTO, Product>();
-            CreateMap<Category, CategoryDTO>();
-            CreateMap<CategoryDTO, Category>();
+            CreateMap<ProductDto, Product>();
+            CreateMap<Category, CategoryDto>();
+            CreateMap<CategoryDto, Category>();
         }
     }
 }

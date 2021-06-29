@@ -1,4 +1,4 @@
-﻿using AccessServices.DTOs;
+﻿using AccessServices.Dtos;
 using AccessServices.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -21,18 +21,23 @@ namespace ProductsWPF
     /// </summary>
     public partial class EditProduct : Window
     {
-        ProductService productService;
-        ProductDTO _product;
+        private ProductService productService;
+        private ProductDto _product;
         public event Action ItemEdited;
-        IEnumerable<CategoryDTO> categories;
-        CategoryDTO _category { get { return categories.Single(c => _product.CategoryName == c.Name); } set { } }
-        public EditProduct(ProductDTO product)
+        IEnumerable<CategoryDto> categories;
+        CategoryDto Category { 
+            get 
+            { 
+                return categories.Single(c => _product.CategoryName == c.Name); 
+            }
+        }
+        public EditProduct(ProductDto product)
         {
             productService = new ProductService();
             _product = product;
             CategoryService categoryService = new CategoryService();
             categories = categoryService.GetCategories();
-            DataContext = new { _product, _category };
+            DataContext = new { _product, Category };
             InitializeComponent();
             categoryCombo.ItemsSource = categories;
         }
@@ -51,7 +56,7 @@ namespace ProductsWPF
             {
                 return;
             }
-            _product.CategoryName = ((CategoryDTO)categoryCombo.SelectedItem).Name;
+            _product.CategoryName = ((CategoryDto)categoryCombo.SelectedItem).Name;
             productService.EditProduct(_product);
 
             ItemEdited();

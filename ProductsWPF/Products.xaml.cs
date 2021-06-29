@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AccessServices.DTOs;
+using AccessServices.Dtos;
 using AccessServices.Infrastructure;
 
 namespace ProductsWPF
@@ -31,10 +31,10 @@ namespace ProductsWPF
             CategoryService categoryService = new CategoryService();
             var categories = categoryService.GetCategories();
 
-            grid.InitializingNewItem += (o, e) => { productsService.AddProduct((ProductDTO)e.NewItem); };
+            grid.InitializingNewItem += (o, e) => { productsService.AddProduct((ProductDto)e.NewItem); };
             grid.RowEditEnding += (o, e) =>
             {
-                productsService.EditProduct((ProductDTO)e.Row.Item);
+                productsService.EditProduct((ProductDto)e.Row.Item);
             };
         }
 
@@ -58,7 +58,7 @@ namespace ProductsWPF
 
             var item = (DataGrid)contextMenu.PlacementTarget;
 
-            var product = (ProductDTO)item.SelectedCells[0].Item;
+            var product = (ProductDto)item.SelectedCells[0].Item;
 
             EditProduct editProduct = new EditProduct(product);
             editProduct.ItemEdited += RefreshItems;
@@ -73,7 +73,7 @@ namespace ProductsWPF
 
             var item = (DataGrid)contextMenu.PlacementTarget;
 
-            var product = (ProductDTO)item.SelectedCells[0].Item;
+            var product = (ProductDto)item.SelectedCells[0].Item;
 
             productsService.DeleteProduct(product);
             RefreshItems();

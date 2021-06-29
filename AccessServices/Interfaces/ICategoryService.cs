@@ -1,4 +1,4 @@
-﻿using AccessServices.DTOs;
+﻿using AccessServices.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,14 +7,14 @@ namespace AccessServices.Interfaces
 {
     public interface ICategoryService
     {
-        public CategoryDTO GetCategory(int id);
+        public CategoryDto GetCategory(int id);
 
-        public IEnumerable<CategoryDTO> GetCategories();
+        public IEnumerable<CategoryDto> GetCategories();
 
-        public void AddCategory(CategoryDTO item);
+        public void AddCategory(CategoryDto item);
 
-        public void EditCategory(CategoryDTO item);
+        public void EditCategory(CategoryDto item);
 
-        public void DeleteCategory(CategoryDTO item);
+        public void DeleteCategory(CategoryDto item);
     }
 }

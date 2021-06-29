@@ -27,11 +27,8 @@ namespace ProductsWPF
         readonly ICategoryService categoryService;
         public MainWindow()
         {
-
             InitializeComponent();
         }
-
-
 
         private void product_Click(object sender, RoutedEventArgs e)
         {

@@ -1,4 +1,4 @@
-﻿using AccessServices.DTOs;
+﻿using AccessServices.Dtos;
 using AccessServices.Infrastructure;
 using AccessServices.Interfaces;
 using Ninject;
@@ -22,12 +22,12 @@ namespace ProductsWPF
     /// </summary>
     public partial class NewCategory : Window
     {
-        CategoryDTO _category;
+        CategoryDto _category;
         public event Action ItemAdded;
 
         public NewCategory()
         {
-            _category = new CategoryDTO();
+            _category = new CategoryDto();
             InitializeComponent();
             DataContext = _category;
         }

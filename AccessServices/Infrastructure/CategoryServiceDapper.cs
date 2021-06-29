@@ -1,4 +1,4 @@
-﻿using AccessServices.DTOs;
+﻿using AccessServices.Dtos;
 using AccessServices.Interfaces;
 using AccessServices.Mapper;
 using AutoMapper;
@@ -23,29 +23,29 @@ namespace AccessServices.Infrastructure
             });
             mapper = mappingConfig.CreateMapper();
         }
-        public void AddCategory(CategoryDTO item)
+        public void AddCategory(CategoryDto item)
         {
-            dbAccesser.AddCategory(mapper.Map<CategoryDTO, Category>(item));
+            dbAccesser.AddCategory(mapper.Map<CategoryDto, Category>(item));
         }
 
-        public void DeleteCategory(CategoryDTO item)
+        public void DeleteCategory(CategoryDto item)
         {
-            dbAccesser.DeleteCategory(mapper.Map<CategoryDTO, Category>(item));
+            dbAccesser.DeleteCategory(mapper.Map<CategoryDto, Category>(item));
         }
 
-        public void EditCategory(CategoryDTO item)
+        public void EditCategory(CategoryDto item)
         {
-            dbAccesser.EditCategory(mapper.Map<CategoryDTO, Category>(item));
+            dbAccesser.EditCategory(mapper.Map<CategoryDto, Category>(item));
         }
 
-        public IEnumerable<CategoryDTO> GetCategories()
+        public IEnumerable<CategoryDto> GetCategories()
         {
-            return mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(dbAccesser.GetCategories());
+            return mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDto>>(dbAccesser.GetCategories());
         }
 
-        public CategoryDTO GetCategory(int id)
+        public CategoryDto GetCategory(int id)
         {
-            return mapper.Map<Category, CategoryDTO>(dbAccesser.GetCategory(id));
+            return mapper.Map<Category, CategoryDto>(dbAccesser.GetCategory(id));
         }
     }
 }

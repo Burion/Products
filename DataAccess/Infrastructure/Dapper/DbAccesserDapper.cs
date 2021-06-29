@@ -7,7 +7,7 @@ using System.Data;
 using System.Text;
 using Dapper;
 using System.Linq;
-using DataAccess.Attrubutes;
+using DataAccess.Attributes;
 using System.Linq.Expressions;
 
 namespace DataAccess.Infrastructure.Dapper
@@ -20,11 +20,6 @@ namespace DataAccess.Infrastructure.Dapper
         }
 
         public void DeleteItem(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EditItem(T original, T toSet)
         {
             throw new NotImplementedException();
         }
@@ -57,10 +52,13 @@ namespace DataAccess.Infrastructure.Dapper
         void InsertItem(T item)
         {
             var connectionString = ConfigurationManager.AppSettings.Get("connectionString");
+
             using (IDbConnection dbConnection = new SqlConnection(connectionString))
             {
-                string types = string.Join(", ", typeof(T).GetProperties().Where(p => !Attribute.IsDefined(p, typeof(NotInsertable))).Select(p => p.Name));
-                List<string> values = new List<string>();
+                var properties = typeof(T).GetProperties();
+                var types = string.Join(", ", properties.Where(p => !Attribute.IsDefined(p, typeof(NotInsertable))).Select(p => p.Name));
+                List<string> valuesList = new List<string>();
+
                 foreach(var p in typeof(T).GetProperties())
                 {
                     if(Attribute.IsDefined(item.GetType().GetProperty(p.Name), typeof(NotInsertable)))
@@ -70,19 +68,18 @@ namespace DataAccess.Infrastructure.Dapper
                     var value = item.GetType().GetProperty(p.Name).GetValue(item, null);
                     if(item.GetType().GetProperty(p.Name).PropertyType == typeof(string))
                     {
-                        values.Add("'" + value + "'");
+                        valuesList.Add("'" + value + "'");
                     }
                     else
                     {
-                        values.Add(value.ToString());
+                        valuesList.Add(value.ToString());
                     }
                 }
-                string valuesString = string.Join(',', values);
-                
-                var query = $"insert into [productdb].[dbo].[{Resources.Mapper.ResourceManager.GetString(typeof(T).Name)}] ({types}) values ({valuesString})";
-                dbConnection.Query(query);
 
-                //(typeof(T).Name)
+                string values = string.Join(',', valuesList);
+                var tableName = Resources.Mapper.ResourceManager.GetString(typeof(T).Name);
+                var query = $"insert into [productdb].[dbo].[{tableName}] ({types}) values ({values})";
+                dbConnection.Query(query);
             }
         }
     }
