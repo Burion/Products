@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.Interfaces
 {
-    public interface IDbAccesserCategory : IDisposable
+    public interface IDbAccesserCategory
     {
         public void AddCategory(Category category);
 

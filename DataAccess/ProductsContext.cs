@@ -25,9 +25,9 @@ namespace DataAccess
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {   
-
-            var connectionString = ConfigurationManager.AppSettings.Get("connectionString") ?? "Server=localhost;Database=productswpf;Trusted_Connection=True;";
+        {
+            const string ConnectionString = "Server=localhost;Database=productswpf;Trusted_Connection=True;";
+            var connectionString = ConfigurationManager.AppSettings.Get("connectionString") ?? ConnectionString;
             options
                 .UseLazyLoadingProxies()
                 .UseSqlServer(connectionString);

@@ -12,11 +12,13 @@ using AccessServices.Helpers;
 
 namespace AccessServices.Infrastructure
 {
-    public class ProductService
+    public class ProductServiceUniversal : IProductService
     {
 
-        readonly IMapper mapper;
-        public ProductService()
+        private readonly IMapper mapper;
+        private readonly IDbAccesserProduct _dbAccesserProducts;
+        private readonly IDbAccesserCategory _dbAccesserCategory;
+        public ProductServiceUniversal(IDbAccesserProduct dbAccesserProduct, IDbAccesserCategory dbAccesserCategory)
         {
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -24,15 +26,14 @@ namespace AccessServices.Infrastructure
             });
 
             mapper = mappingConfig.CreateMapper();
+            _dbAccesserProducts = dbAccesserProduct;
+            _dbAccesserCategory = dbAccesserCategory;
         }
 
         public IEnumerable<ProductDto> GetProducts()
         {
-            using (var dbAccesser = new DbAccesserEF<Product>(BindingsHendler.GetContext()))
-            {
-                var dbItems = dbAccesser.GetItems();
-                return mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(dbItems);
-            }
+            var dbItems = _dbAccesserProducts.GetProducts();
+            return mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(dbItems);
         }
 
         public void AddProduct(ProductDto product)

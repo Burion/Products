@@ -21,11 +21,11 @@ namespace ProductsWPF
     /// </summary>
     public partial class Products : Page
     {
-        ProductService productsService;
+        ProductServiceUniversal productsService;
         public Products()
         {
             InitializeComponent();
-            productsService = new ProductService();
+            productsService = new ProductServiceUniversal();
             grid.ItemsSource = productsService.GetProducts();
 
             CategoryService categoryService = new CategoryService();

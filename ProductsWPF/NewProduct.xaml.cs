@@ -20,13 +20,13 @@ namespace ProductsWPF
     /// </summary>
     public partial class NewProduct : Window
     {
-        readonly ProductService productService;
+        readonly ProductServiceUniversal productService;
         public event Action ItemAdded;
         ProductDto _product;
         public NewProduct()
         {
             InitializeComponent();
-            productService = new ProductService();
+            productService = new ProductServiceUniversal();
             _product = new ProductDto();
             CategoryService categoryService = new CategoryService();
             categoryCombo.ItemsSource = categoryService.GetCategories();

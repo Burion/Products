@@ -21,7 +21,7 @@ namespace ProductsWPF
     /// </summary>
     public partial class EditProduct : Window
     {
-        private ProductService productService;
+        private ProductServiceUniversal productService;
         private ProductDto _product;
         public event Action ItemEdited;
         IEnumerable<CategoryDto> categories;
@@ -33,7 +33,7 @@ namespace ProductsWPF
         }
         public EditProduct(ProductDto product)
         {
-            productService = new ProductService();
+            productService = new ProductServiceUniversal();
             _product = product;
             CategoryService categoryService = new CategoryService();
             categories = categoryService.GetCategories();
