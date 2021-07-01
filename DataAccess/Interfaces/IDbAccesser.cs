@@ -9,9 +9,7 @@ namespace DataAccess.Interfaces
     {
         void AddItem(T item);
         void DeleteItem(T item);
-
         T GetItem(Expression<Func<T, bool>> predicate);
-
         IEnumerable<T> GetItems(Predicate<T> predicate);
         IEnumerable<T> GetItems();
         void EditItem(T item);

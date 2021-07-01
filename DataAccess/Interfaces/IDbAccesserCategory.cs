@@ -8,17 +8,10 @@ namespace DataAccess.Interfaces
     public interface IDbAccesserCategory
     {
         public void AddCategory(Category category);
-
-
         public void DeleteCategory(Category category);
-
-
         public void EditCategory(Category category);
-
-
         public IEnumerable<Category> GetCategories();
-
         public Category GetCategory(int id);
-
+        public Category GetCategoryByName(string name);
     }
 }

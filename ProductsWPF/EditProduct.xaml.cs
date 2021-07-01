@@ -1,5 +1,8 @@
 ﻿using AccessServices.Dtos;
 using AccessServices.Infrastructure;
+using AccessServices.Interfaces;
+using Ninject;
+using ProductsWPF.IoC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +24,7 @@ namespace ProductsWPF
     /// </summary>
     public partial class EditProduct : Window
     {
-        private ProductServiceUniversal productService;
+        private ProductService productService;
         private ProductDto _product;
         public event Action ItemEdited;
         IEnumerable<CategoryDto> categories;
@@ -33,12 +36,15 @@ namespace ProductsWPF
         }
         public EditProduct(ProductDto product)
         {
-            productService = new ProductServiceUniversal();
-            _product = product;
-            CategoryService categoryService = new CategoryService();
-            categories = categoryService.GetCategories();
-            DataContext = new { _product, Category };
             InitializeComponent();
+
+            var kernel = new StandardKernel(new IoCBindings());
+            productService = kernel.Get<ProductService>();
+            CategoryService categoryService = kernel.Get<CategoryService>();
+
+            categories = categoryService.GetCategories();
+            _product = product;
+            DataContext = new { _product, _category = Category };
             categoryCombo.ItemsSource = categories;
         }
         private void PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -52,10 +58,13 @@ namespace ProductsWPF
             nameInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             descriptionInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             priceInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            categoryCombo.GetBindingExpression(ComboBox.SelectedItemProperty).UpdateSource();
+            
             if (Validation.GetHasError(nameInput) || Validation.GetHasError(descriptionInput) || Validation.GetHasError(priceInput) || Validation.GetHasError(categoryCombo))
             {
                 return;
             }
+            
             _product.CategoryName = ((CategoryDto)categoryCombo.SelectedItem).Name;
             productService.EditProduct(_product);
 

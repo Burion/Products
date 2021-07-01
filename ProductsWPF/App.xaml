@@ -5,6 +5,6 @@
              xmlns:locators="clr-namespace:ProductsWPF.IoC"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <locators:ClassLocator x:Key="ClassLocator"/>
+
     </Application.Resources>
 </Application>

@@ -49,6 +49,7 @@ namespace ProductsWPF
 
                 case "Products":
                     Products productsPage = new Products();
+
                     mainFrame.Navigate(productsPage);
                     break;
 

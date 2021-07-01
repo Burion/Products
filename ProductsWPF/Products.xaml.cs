@@ -13,6 +13,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AccessServices.Dtos;
 using AccessServices.Infrastructure;
+using AccessServices.Interfaces;
+using Ninject;
+using ProductsWPF.IoC;
 
 namespace ProductsWPF
 {
@@ -21,14 +24,18 @@ namespace ProductsWPF
     /// </summary>
     public partial class Products : Page
     {
-        ProductServiceUniversal productsService;
+        IProductService productsService;
+        ICategoryService categoryService;
         public Products()
         {
             InitializeComponent();
-            productsService = new ProductServiceUniversal();
-            grid.ItemsSource = productsService.GetProducts();
 
-            CategoryService categoryService = new CategoryService();
+            var kernel = new StandardKernel(new IoCBindings());
+            productsService = kernel.Get<IProductService>();
+            
+            grid.ItemsSource = productsService.GetProducts();
+            categoryService = kernel.Get<CategoryService>();
+            
             var categories = categoryService.GetCategories();
 
             grid.InitializingNewItem += (o, e) => { productsService.AddProduct((ProductDto)e.NewItem); };
@@ -47,17 +54,16 @@ namespace ProductsWPF
 
         private void RefreshItems()
         {
+            var kernel = new StandardKernel(new IoCBindings());
+            productsService = kernel.Get<IProductService>();
             grid.ItemsSource = productsService.GetProducts();
         }
 
         private void EditContext_Click(object o, RoutedEventArgs e)
         {
             var menuItem = (MenuItem)o;
-
             var contextMenu = (ContextMenu)menuItem.Parent;
-
             var item = (DataGrid)contextMenu.PlacementTarget;
-
             var product = (ProductDto)item.SelectedCells[0].Item;
 
             EditProduct editProduct = new EditProduct(product);
@@ -68,11 +74,8 @@ namespace ProductsWPF
         private void DeleteContext_Click(object o, EventArgs e)
         {
             var menuItem = (MenuItem)o;
-
             var contextMenu = (ContextMenu)menuItem.Parent;
-
             var item = (DataGrid)contextMenu.PlacementTarget;
-
             var product = (ProductDto)item.SelectedCells[0].Item;
 
             productsService.DeleteProduct(product);

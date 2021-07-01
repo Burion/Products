@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.ConfigurationsInterfaces
 {
-    interface IEntityConfiguration
+    public interface IEntityConfiguration
     {
         public void Configure();
     }

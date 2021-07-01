@@ -8,13 +8,10 @@ namespace AccessServices.Interfaces
     public interface ICategoryService
     {
         public CategoryDto GetCategory(int id);
-
         public IEnumerable<CategoryDto> GetCategories();
-
         public void AddCategory(CategoryDto item);
-
         public void EditCategory(CategoryDto item);
-
         public void DeleteCategory(CategoryDto item);
+        public CategoryDto GetCategoryByName(string name);
     }
 }

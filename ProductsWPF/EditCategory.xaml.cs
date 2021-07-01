@@ -24,25 +24,28 @@ namespace ProductsWPF
     {
         ICategoryService categoryService;
         public event Action ItemEdited;
-        CategoryDto _category;
+        private CategoryDto categoryModel;
         public EditCategory(CategoryDto category)
         {
+            InitializeComponent();
             var kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
             categoryService = kernel.Get<ICategoryService>();
-            _category = category;
-            InitializeComponent();
-            DataContext = _category;
+
+            categoryModel = category;
+            DataContext = categoryModel;
         }
 
         private void Edit_Click(object o, EventArgs e)
         {
             nameInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            
             if (Validation.GetHasError(nameInput))
             {
                 return;
             }
-            categoryService.EditCategory(_category);
+
+            categoryService.EditCategory(categoryModel);
             ItemEdited();
             Close();
         }

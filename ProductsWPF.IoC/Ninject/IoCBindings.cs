@@ -12,9 +12,12 @@ namespace ProductsWPF.IoC
     {
         public override void Load()
         {
-            Bind<ICategoryService>().To<CategoryServiceUniversal>();
-            Bind<IDbAccesserCategory>().To<DbAccesserCategoryEF>();
+            Bind<ICategoryService>().To<CategoryService>();
+            Bind<IDbAccesserCategory>().To<DbAccesserCategoryEF>().InTransientScope();
             Bind<ProductsContext>().To<ProductsContext>();
+
+            Bind<IProductService>().To<ProductService>();
+            Bind<IDbAccesserProduct>().To<DbAccesserProductEF>();
         }
     }
 }

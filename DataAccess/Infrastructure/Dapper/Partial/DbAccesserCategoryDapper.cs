@@ -62,5 +62,14 @@ namespace DataAccess.Infrastructure.Dapper.Partial
                 return dbConnection.QuerySingle<Category>(query);
             }
         }
+
+        public Category GetCategoryByName(string name)
+        {
+            using (IDbConnection dbConnection = new SqlConnection(connectionString))
+            {
+                var query = $"select * from [productswpf].[dbo].[Categories] where Name = {name}";
+                return dbConnection.QuerySingle<Category>(query);
+            }
+        }
     }
 }

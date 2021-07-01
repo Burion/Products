@@ -36,6 +36,11 @@ namespace DataAccess.Infrastructure.EfCore
         {
             return GetItem(e => e.Id == id);
         }
+
+        public Category GetCategoryByName(string name)
+        {
+            return GetItem(e => e.Name == name);
+        }
     }
 }
 

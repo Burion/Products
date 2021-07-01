@@ -14,6 +14,5 @@ namespace AccessServices.Mapper
             return source.Category.Name;
         }
     }
-    
 }
 

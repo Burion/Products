@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccess.Infrastructure.EfCore
 {
-    class DbAccesserProductEF : DbAccesserEF<Product>, IDbAccesserProduct
+    public class DbAccesserProductEF : DbAccesserEF<Product>, IDbAccesserProduct
     {
         public DbAccesserProductEF(ProductsContext context) : base(context)
         {

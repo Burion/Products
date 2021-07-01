@@ -13,7 +13,6 @@ namespace AccessServices.Ninject
         {
             Bind<IDbAccesserCategory>().To<DbAccesserCategoryEF>();
             Bind<ProductsContext>().To<ProductsContext>();
-
         }
     }
 }

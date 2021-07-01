@@ -17,6 +17,7 @@ using AccessServices.Infrastructure;
 using Ninject;
 using System.Reflection;
 using AccessServices.Interfaces;
+using ProductsWPF.IoC;
 
 namespace ProductsWPF
 {
@@ -28,9 +29,11 @@ namespace ProductsWPF
         ICategoryService categoryService;
         public Categories(ICategoryService categoryService)
         {
-            this.categoryService = categoryService;
             InitializeComponent();
+
+            this.categoryService = categoryService;
             grid.ItemsSource = this.categoryService.GetCategories();
+
             grid.InitializingNewItem += (o, e) => { 
                 this.categoryService.AddCategory((CategoryDto)e.NewItem);
                 grid.ItemsSource = this.categoryService.GetCategories();  
@@ -43,8 +46,11 @@ namespace ProductsWPF
         }
         private void RefreshItems()
         {
+            var kernel = new StandardKernel(new IoCBindings());
+            var categoryService = kernel.Get<ICategoryService>();
             grid.ItemsSource = categoryService.GetCategories();
         }
+
         private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete)
@@ -67,6 +73,7 @@ namespace ProductsWPF
             var contextMenu = (ContextMenu)menuItem.Parent;
             var item = (DataGrid)contextMenu.PlacementTarget;
             var category = (CategoryDto)item.SelectedCells[0].Item;
+
             EditCategory editProduct = new EditCategory(category);
             editProduct.ItemEdited += RefreshItems;
             editProduct.Show();
@@ -78,9 +85,9 @@ namespace ProductsWPF
             var contextMenu = (ContextMenu)menuItem.Parent;
             var item = (DataGrid)contextMenu.PlacementTarget;
             var category = (CategoryDto)item.SelectedCells[0].Item;
+
             categoryService.DeleteCategory(category);
             RefreshItems();
         }
-
     }
 }

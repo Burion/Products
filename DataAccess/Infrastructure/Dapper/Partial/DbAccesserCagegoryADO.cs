@@ -36,11 +36,6 @@ namespace DataAccess.Infrastructure.Dapper.Partial
             }
         }
 
-        public void Dispose()
-        {
-            
-        }
-
         public void EditCategory(Category category)
         {
             using (SqlConnection dbConnection = new SqlConnection(connectionString))
@@ -77,6 +72,20 @@ namespace DataAccess.Infrastructure.Dapper.Partial
             using (SqlConnection dbConnection = new SqlConnection(connectionString))
             {
                 var query = $"select * from [productswpf].[dbo].[Categories] where Id = {id}";
+                dbConnection.Open();
+                SqlCommand command = new SqlCommand(query, dbConnection);
+                var reader = command.ExecuteReader();
+                var c = new Category() { Id = (int)reader.GetValue(0), Name = (string)reader.GetValue(1) };
+                dbConnection.Close();
+                return c;
+            }
+        }
+
+        public Category GetCategoryByName(string name)
+        {
+            using (SqlConnection dbConnection = new SqlConnection(connectionString))
+            {
+                var query = $"select * from [productswpf].[dbo].[Categories] where Name = {name}";
                 dbConnection.Open();
                 SqlCommand command = new SqlCommand(query, dbConnection);
                 var reader = command.ExecuteReader();

@@ -1,77 +1,71 @@
 ﻿using AccessServices.Dtos;
-using AccessServices.Helpers;
 using AccessServices.Interfaces;
 using AccessServices.Mapper;
 using AccessServices.Ninject;
 using AutoMapper;
-using DataAccess;
 using DataAccess.Infrastructure.EfCore;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using Ninject;
+using Ninject.Modules;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
 
 namespace AccessServices.Infrastructure
 {
-    public class CategoryService: ICategoryService
+    public class CategoryService : ICategoryService
     {
         readonly IMapper mapper;
-     
-        public CategoryService()
+        readonly IDbAccesserCategory _dbAccesser;
+        
+        public CategoryService(IDbAccesserCategory dbAccesser)
         {
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
             });
-
             mapper = mappingConfig.CreateMapper();
+            _dbAccesser = dbAccesser;
         }
 
         public CategoryDto GetCategory(int id)
         {
-            using (var dbAccesser = new DbAccesserEF<Category>(BindingsHendler.GetContext()))
-            { 
-                var item = dbAccesser.GetItem(c => c.Id == id);
-
-                return mapper.Map<Category, CategoryDto>(item);
-            }
+            var item = _dbAccesser.GetCategory(id);
+            return mapper.Map<Category, CategoryDto>(item);
         }
 
         public IEnumerable<CategoryDto> GetCategories()
         {
-            using (var dbAccesser = new DbAccesserEF<Category>(BindingsHendler.GetContext()))
-            {
-                var categories = dbAccesser.GetItems();
-
-                return mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDto>>(categories);
-            }
+            var items = _dbAccesser.GetCategories();
+            return mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDto>>(items);
         }
 
-        public void AddCategory(CategoryDto categoryDto)
+        public void AddCategory(CategoryDto item)
         {
-            using (var dbAccesser = new DbAccesserEF<Category>(BindingsHendler.GetContext()))
-            {
-                dbAccesser.AddItem(mapper.Map<CategoryDto, Category>(categoryDto));
-            }   
+            _dbAccesser.AddCategory(mapper.Map<CategoryDto, Category>(item));
         }
 
-        public void EditCategory(CategoryDto categoryDto)
+        public void EditCategory(CategoryDto item)
         {
-            using (var dbAccesser = new DbAccesserEF<Category>(BindingsHendler.GetContext()))
-            {
-                var category = dbAccesser.GetItem(i => i.Id == categoryDto.Id);
-                dbAccesser.EditItem(mapper.Map(categoryDto, category));
-            }
+            var _item = _dbAccesser.GetCategory(item.Id);
+            mapper.Map(item, _item);
+            _dbAccesser.EditCategory(mapper.Map(item, _item));
         }
 
-        public void DeleteCategory(CategoryDto categoryDto)
+        public void DeleteCategory(CategoryDto item)
         {
-            using (var dbAccesser = new DbAccesserEF<Category>(BindingsHendler.GetContext()))
-            {
-                var category = dbAccesser.GetItem(i => i.Id == categoryDto.Id);
-                dbAccesser.DeleteItem(category);
-            }
+
+            var _item = _dbAccesser.GetCategory(item.Id);
+            _dbAccesser.DeleteCategory(_item);
+        }
+
+        public CategoryDto GetCategoryByName(string name)
+        {
+            var category = _dbAccesser.GetCategoryByName(name);
+            return mapper.Map<Category, CategoryDto>(category);
         }
     }
 }
+

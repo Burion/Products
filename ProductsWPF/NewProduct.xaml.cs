@@ -1,5 +1,7 @@
 ﻿using AccessServices.Dtos;
 using AccessServices.Infrastructure;
+using Ninject;
+using ProductsWPF.IoC;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,15 +22,17 @@ namespace ProductsWPF
     /// </summary>
     public partial class NewProduct : Window
     {
-        readonly ProductServiceUniversal productService;
+        readonly ProductService productService;
         public event Action ItemAdded;
         ProductDto _product;
         public NewProduct()
         {
             InitializeComponent();
-            productService = new ProductServiceUniversal();
+            var kernel = new StandardKernel(new IoCBindings());
+            
+            productService = kernel.Get<ProductService>();
             _product = new ProductDto();
-            CategoryService categoryService = new CategoryService();
+            CategoryService categoryService = kernel.Get<CategoryService>();
             categoryCombo.ItemsSource = categoryService.GetCategories();
             DataContext = _product;
         }
@@ -45,10 +49,12 @@ namespace ProductsWPF
             descriptionInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             priceInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             categoryCombo.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
+            
             if (Validation.GetHasError(nameInput) || Validation.GetHasError(descriptionInput) || Validation.GetHasError(priceInput) || Validation.GetHasError(categoryCombo))
             {
                 return;
             }
+           
             var category = (CategoryDto)categoryCombo.SelectedItem;
             _product.CategoryName = (category.Name);
             productService.AddProduct(_product);
