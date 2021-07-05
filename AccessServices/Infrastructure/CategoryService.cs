@@ -1,17 +1,10 @@
 ﻿using AccessServices.Dtos;
 using AccessServices.Interfaces;
 using AccessServices.Mapper;
-using AccessServices.Ninject;
 using AutoMapper;
-using DataAccess.Infrastructure.EfCore;
 using DataAccess.Interfaces;
 using DataAccess.Models;
-using Ninject;
-using Ninject.Modules;
-using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 
 namespace AccessServices.Infrastructure
 {
@@ -26,6 +19,7 @@ namespace AccessServices.Infrastructure
             {
                 mc.AddProfile(new MappingProfile());
             });
+
             mapper = mappingConfig.CreateMapper();
             _dbAccesser = dbAccesser;
         }
@@ -33,12 +27,14 @@ namespace AccessServices.Infrastructure
         public CategoryDto GetCategory(int id)
         {
             var item = _dbAccesser.GetCategory(id);
+
             return mapper.Map<Category, CategoryDto>(item);
         }
 
         public IEnumerable<CategoryDto> GetCategories()
         {
             var items = _dbAccesser.GetCategories();
+
             return mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDto>>(items);
         }
 
@@ -56,7 +52,6 @@ namespace AccessServices.Infrastructure
 
         public void DeleteCategory(CategoryDto item)
         {
-
             var _item = _dbAccesser.GetCategory(item.Id);
             _dbAccesser.DeleteCategory(_item);
         }
@@ -64,6 +59,7 @@ namespace AccessServices.Infrastructure
         public CategoryDto GetCategoryByName(string name)
         {
             var category = _dbAccesser.GetCategoryByName(name);
+
             return mapper.Map<Category, CategoryDto>(category);
         }
     }

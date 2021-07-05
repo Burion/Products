@@ -1,19 +1,10 @@
 ﻿using AccessServices.Dtos;
-using AccessServices.Infrastructure;
 using AccessServices.Interfaces;
 using Ninject;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ProductsWPF
 {
@@ -45,6 +36,7 @@ namespace ProductsWPF
             kernel.Load(Assembly.GetExecutingAssembly());
             
             ICategoryService categoryService = kernel.Get<ICategoryService>();
+
             try
             {
                 categoryService.AddCategory(_category);

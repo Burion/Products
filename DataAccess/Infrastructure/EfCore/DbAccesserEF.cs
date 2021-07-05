@@ -4,24 +4,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-
 
 namespace DataAccess.Infrastructure.EfCore
 {
     public class DbAccesserEF<T> : IDbAccesser<T>, IDisposable where T : class
     {
         readonly ProductsContext _context;
+
         public DbAccesserEF(ProductsContext context)
         {
             _context = context;
             _context.Database.EnsureCreated();
         }
+
         public void AddItem(T item)
         {
             _context.Set<T>().Add(item);
             _context.SaveChanges();
         }
+
         public void DeleteItem(T item)
         {
             _context.Set<T>().Remove(item);

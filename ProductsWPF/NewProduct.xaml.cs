@@ -3,17 +3,10 @@ using AccessServices.Infrastructure;
 using Ninject;
 using ProductsWPF.IoC;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ProductsWPF
 {
@@ -25,6 +18,7 @@ namespace ProductsWPF
         readonly ProductService productService;
         public event Action ItemAdded;
         ProductDto _product;
+
         public NewProduct()
         {
             InitializeComponent();

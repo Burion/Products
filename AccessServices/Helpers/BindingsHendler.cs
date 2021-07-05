@@ -1,9 +1,6 @@
 ﻿using AccessServices.Ninject;
 using DataAccess;
 using Ninject;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AccessServices.Helpers
 {

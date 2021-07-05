@@ -1,13 +1,5 @@
-﻿using AccessServices.Infrastructure;
-using AccessServices.Interfaces;
-using DataAccess;
-using DataAccess.Infrastructure.EfCore;
-using DataAccess.Interfaces;
-using Ninject.Modules;
+﻿using DataAccess;
 using ProductsWPF.IoC;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProductsWPF.Integration.Tests.Ninject
 {

@@ -7,6 +7,6 @@ namespace DataAccess.ConfigurationsInterfaces
 {
     public interface IEntityConfiguration
     {
-        public void Configure();
+        void Configure();
     }
 }

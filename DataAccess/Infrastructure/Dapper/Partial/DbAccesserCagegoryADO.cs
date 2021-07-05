@@ -1,17 +1,15 @@
 ﻿using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.Data.SqlClient;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
-using System.Text;
 
 namespace DataAccess.Infrastructure.Dapper.Partial
 {
     public class DbAccesserCategoryADO : IDbAccesserCategory
     {
         string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
+
         public void AddCategory(Category category)
         {
             using (SqlConnection dbConnection = new SqlConnection(connectionString))
@@ -57,12 +55,15 @@ namespace DataAccess.Infrastructure.Dapper.Partial
                 SqlCommand command = new SqlCommand(query, dbConnection);
                 var reader = command.ExecuteReader();
                 List<Category> categories = new List<Category>();
+
                 while(reader.Read())
                 {
                     var c = new Category() { Id = (int)reader.GetValue(0), Name = (string)reader.GetValue(1) };
                     categories.Add(c);
                 }
+
                 dbConnection.Close();
+
                 return categories;
             }
         }
@@ -77,6 +78,7 @@ namespace DataAccess.Infrastructure.Dapper.Partial
                 var reader = command.ExecuteReader();
                 var c = new Category() { Id = (int)reader.GetValue(0), Name = (string)reader.GetValue(1) };
                 dbConnection.Close();
+
                 return c;
             }
         }
@@ -91,6 +93,7 @@ namespace DataAccess.Infrastructure.Dapper.Partial
                 var reader = command.ExecuteReader();
                 var c = new Category() { Id = (int)reader.GetValue(0), Name = (string)reader.GetValue(1) };
                 dbConnection.Close();
+
                 return c;
             }
         }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DataAccess.ConfigurationsInterfaces;
+﻿using DataAccess.ConfigurationsInterfaces;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.ConfigurationInfrastructure
 {
-    class CategoryEntityConfiguration : IEntityConfiguration
+    internal class CategoryEntityConfiguration : IEntityConfiguration
     {
         private readonly ModelBuilder _builder;
 
@@ -18,10 +15,12 @@ namespace DataAccess.ConfigurationInfrastructure
 
         public void Configure()
         {
-            _builder.Entity<Category>()
+            _builder
+                .Entity<Category>()
                 .HasIndex(u => u.Name)
                 .IsUnique();
-            _builder.Entity<Category>()
+            _builder
+                .Entity<Category>()
                 .Property(c => c.Name)
                 .HasMaxLength(256);
         }

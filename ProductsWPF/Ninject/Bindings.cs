@@ -1,12 +1,5 @@
-﻿using AccessServices.Infrastructure;
-using AccessServices.Interfaces;
-
-using Ninject.Modules;
-using ProductsWPF;
+﻿using ProductsWPF;
 using ProductsWPF.IoC;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AccessServices.Ninject
 {

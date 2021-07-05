@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
 using DataAccess.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Configuration;
-using System.Collections.Specialized;
 using DataAccess.ConfigurationInfrastructure;
 
 namespace DataAccess

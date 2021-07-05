@@ -2,17 +2,16 @@
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.Data.SqlClient;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Text;
 
 namespace DataAccess.Infrastructure.Dapper.Partial
 {
     public class DbAccesserCategoryDapper : IDbAccesserCategory
     {
         string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
+
         public void AddCategory(Category category)
         {
             using (IDbConnection dbConnection = new SqlConnection(connectionString))
@@ -31,11 +30,6 @@ namespace DataAccess.Infrastructure.Dapper.Partial
             }
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         public void EditCategory(Category category)
         {
             using (IDbConnection dbConnection = new SqlConnection(connectionString))
@@ -50,6 +44,7 @@ namespace DataAccess.Infrastructure.Dapper.Partial
             using (IDbConnection dbConnection = new SqlConnection(connectionString))
             {
                 var query = $"select * from [productswpf].[dbo].[Categories]";
+
                 return dbConnection.Query<Category>(query);
             }
         }
@@ -59,6 +54,7 @@ namespace DataAccess.Infrastructure.Dapper.Partial
             using (IDbConnection dbConnection = new SqlConnection(connectionString))
             {
                 var query = $"select * from [productswpf].[dbo].[Categories] where Id = {id}";
+
                 return dbConnection.QuerySingle<Category>(query);
             }
         }
@@ -68,6 +64,7 @@ namespace DataAccess.Infrastructure.Dapper.Partial
             using (IDbConnection dbConnection = new SqlConnection(connectionString))
             {
                 var query = $"select * from [productswpf].[dbo].[Categories] where Name = {name}";
+
                 return dbConnection.QuerySingle<Category>(query);
             }
         }

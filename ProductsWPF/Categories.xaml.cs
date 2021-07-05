@@ -1,21 +1,9 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using AccessServices;
 using AccessServices.Dtos;
-using AccessServices.Infrastructure;
 using Ninject;
-using System.Reflection;
 using AccessServices.Interfaces;
 using ProductsWPF.IoC;
 
@@ -27,6 +15,7 @@ namespace ProductsWPF
     public partial class Categories : Page
     {
         ICategoryService categoryService;
+
         public Categories(ICategoryService categoryService)
         {
             InitializeComponent();
@@ -44,6 +33,7 @@ namespace ProductsWPF
                 this.categoryService.EditCategory((CategoryDto)e.Row.Item);
             };
         }
+
         private void RefreshItems()
         {
             var kernel = new StandardKernel(new IoCBindings());
