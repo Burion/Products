@@ -35,7 +35,6 @@ namespace ProductsWPF
 
                     mainFrame.Navigate(productsPage);
                     break;
-
             }
         }
     }

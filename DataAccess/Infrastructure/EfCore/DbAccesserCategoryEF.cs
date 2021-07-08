@@ -12,6 +12,7 @@ namespace DataAccess.Infrastructure.EfCore
         {
 
         }
+
         public void AddCategory(Category category)
         {
             AddItem(category);

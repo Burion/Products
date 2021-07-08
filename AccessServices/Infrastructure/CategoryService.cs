@@ -10,8 +10,8 @@ namespace AccessServices.Infrastructure
 {
     public class CategoryService : ICategoryService
     {
-        readonly IMapper mapper;
-        readonly IDbAccesserCategory _dbAccesser;
+        private readonly IMapper mapper;
+        private readonly IDbAccesserCategory _dbAccesser;
         
         public CategoryService(IDbAccesserCategory dbAccesser)
         {

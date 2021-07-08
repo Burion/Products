@@ -13,7 +13,7 @@ namespace ProductsWPF
     /// </summary>
     public partial class EditCategory : Window
     {
-        ICategoryService categoryService;
+        private ICategoryService categoryService;
         public event Action ItemEdited;
         private CategoryDto categoryModel;
 

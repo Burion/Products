@@ -13,7 +13,7 @@ namespace ProductsWPF
     /// </summary>
     public partial class NewCategory : Window
     {
-        CategoryDto _category;
+        private CategoryDto _category;
         public event Action ItemAdded;
 
         public NewCategory()

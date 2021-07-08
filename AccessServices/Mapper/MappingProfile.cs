@@ -7,7 +7,7 @@ using DataAccess.Models;
 
 namespace AccessServices.Mapper
 {
-    class MappingProfile: Profile
+    internal class MappingProfile: Profile
     {
         public MappingProfile()
         {

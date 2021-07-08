@@ -9,7 +9,7 @@ namespace DataAccess.Infrastructure.EfCore
 {
     public class DbAccesserEF<T> : IDbAccesser<T>, IDisposable where T : class
     {
-        readonly ProductsContext _context;
+        private readonly ProductsContext _context;
 
         public DbAccesserEF(ProductsContext context)
         {

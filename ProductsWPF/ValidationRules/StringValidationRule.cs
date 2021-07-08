@@ -10,7 +10,10 @@ namespace ProductsWPF.ValidationRules
             var strValue = Convert.ToString(value);
 
             if (string.IsNullOrEmpty(strValue))
-                return new ValidationResult(false, $"Value cannot be empty");
+            {
+                return new ValidationResult(false, "Value cannot be empty");
+            }
+
             return new ValidationResult(true, null);
         }
     }

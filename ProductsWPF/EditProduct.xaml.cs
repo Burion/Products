@@ -27,13 +27,9 @@ namespace ProductsWPF
         private ProductService productService;
         private ProductDto _product;
         public event Action ItemEdited;
-        IEnumerable<CategoryDto> categories;
-        CategoryDto Category { 
-            get 
-            { 
-                return categories.Single(c => _product.CategoryName == c.Name); 
-            }
-        }
+        private IEnumerable<CategoryDto> categories;
+        private CategoryDto Category => categories.Single(c => _product.CategoryName == c.Name);
+
         public EditProduct(ProductDto product)
         {
             InitializeComponent();
@@ -47,6 +43,7 @@ namespace ProductsWPF
             DataContext = new { _product, _category = Category };
             categoryCombo.ItemsSource = categories;
         }
+
         private void PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");

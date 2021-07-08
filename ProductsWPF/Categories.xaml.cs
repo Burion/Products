@@ -14,7 +14,7 @@ namespace ProductsWPF
     /// </summary>
     public partial class Categories : Page
     {
-        ICategoryService categoryService;
+        private ICategoryService categoryService;
 
         public Categories(ICategoryService categoryService)
         {

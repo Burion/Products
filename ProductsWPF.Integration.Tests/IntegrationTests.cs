@@ -10,7 +10,7 @@ namespace ProductsWPF.Integration.Tests
 {
     public class IntegrationTests
     {
-        StandardKernel kernel;
+        private StandardKernel kernel;
 
         public IntegrationTests()
         {

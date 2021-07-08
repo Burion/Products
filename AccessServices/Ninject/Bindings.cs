@@ -7,7 +7,7 @@ using System.Text;
 using DataAccess;
 namespace AccessServices.Ninject
 {
-    class Bindings : NinjectModule
+    internal class Bindings : NinjectModule
     {
         public override void Load()
         {

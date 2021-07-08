@@ -15,9 +15,9 @@ namespace ProductsWPF
     /// </summary>
     public partial class NewProduct : Window
     {
-        readonly ProductService productService;
+        private readonly ProductService productService;
         public event Action ItemAdded;
-        ProductDto _product;
+        private ProductDto _product;
 
         public NewProduct()
         {
@@ -44,7 +44,10 @@ namespace ProductsWPF
             priceInput.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             categoryCombo.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
             
-            if (Validation.GetHasError(nameInput) || Validation.GetHasError(descriptionInput) || Validation.GetHasError(priceInput) || Validation.GetHasError(categoryCombo))
+            if (Validation.GetHasError(nameInput) || 
+                Validation.GetHasError(descriptionInput) || 
+                Validation.GetHasError(priceInput) || 
+                Validation.GetHasError(categoryCombo))
             {
                 return;
             }
@@ -56,7 +59,5 @@ namespace ProductsWPF
             ItemAdded();
             this.Close();
         }
-
-        
     }
 }

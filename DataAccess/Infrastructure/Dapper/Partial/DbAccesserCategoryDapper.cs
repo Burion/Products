@@ -10,7 +10,7 @@ namespace DataAccess.Infrastructure.Dapper.Partial
 {
     public class DbAccesserCategoryDapper : IDbAccesserCategory
     {
-        string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
+        private readonly string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
 
         public void AddCategory(Category category)
         {
